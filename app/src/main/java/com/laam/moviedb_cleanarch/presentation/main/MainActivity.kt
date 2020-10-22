@@ -15,7 +15,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setUpToolbar()
         setUpNavigation()
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(viewBinding.toolbar)
     }
 
     private fun setUpNavigation() {
