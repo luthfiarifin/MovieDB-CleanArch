@@ -3,4 +3,6 @@
     <string name="splash_image">Splash Image</string>
     <string name="movie">Movie</string>
     <string name="tv">Tv</string>
+    <string name="movie_image">Movie image</string>
+    <string name="tv_show_image">Tv show image</string>
 </resources>
