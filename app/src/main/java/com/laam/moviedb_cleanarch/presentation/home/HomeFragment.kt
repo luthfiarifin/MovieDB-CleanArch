@@ -9,7 +9,7 @@ import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentHomeBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.movie.MovieFragment
-import com.laam.moviedb_cleanarch.presentation.tv.TvFragment
+import com.laam.moviedb_cleanarch.presentation.tv.TvShowFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
@@ -26,7 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private fun setUpTabLayout() {
         val fragmentList = arrayListOf<Fragment>(
             MovieFragment(),
-            TvFragment()
+            TvShowFragment()
         )
 
         val fragmentName = arrayListOf(
