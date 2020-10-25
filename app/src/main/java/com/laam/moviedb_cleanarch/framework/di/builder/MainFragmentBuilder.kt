@@ -3,7 +3,7 @@ package com.laam.moviedb_cleanarch.framework.di.builder
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragment
 import com.laam.moviedb_cleanarch.presentation.movie.MovieFragment
 import com.laam.moviedb_cleanarch.presentation.splash.SplashFragment
-import com.laam.moviedb_cleanarch.presentation.tv.TvFragment
+import com.laam.moviedb_cleanarch.presentation.tv.TvShowFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -20,5 +20,5 @@ abstract class MainFragmentBuilder {
     abstract fun contributeMovieFragment(): MovieFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeTvFragment(): TvFragment
+    abstract fun contributeTvFragment(): TvShowFragment
 }
