@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$ktx_version"
