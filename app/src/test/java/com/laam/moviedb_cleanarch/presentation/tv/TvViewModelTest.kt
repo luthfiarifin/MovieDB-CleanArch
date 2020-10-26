@@ -1,15 +1,21 @@
 package com.laam.moviedb_cleanarch.presentation.tv
 
-import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class TvViewModelTest {
 
+    private lateinit var viewModel: TvViewModel
+
+    @Before
+    fun setUp() {
+        viewModel = TvViewModel()
+    }
+
     @Test
     fun getTvShowList() {
-        val list = TvShowDummy.generateDummyTvShow()
+        val list = viewModel.tvShowList
         assertEquals(12, list.size)
     }
 }

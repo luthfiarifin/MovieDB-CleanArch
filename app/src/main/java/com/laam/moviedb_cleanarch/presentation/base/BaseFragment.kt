@@ -6,16 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.laam.moviedb_cleanarch.framework.viewmodel.ViewModelProviderFactory
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel> : DaggerFragment() {
-
-    @Inject
-    lateinit var factory: ViewModelProviderFactory
+abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel> : Fragment() {
 
     private lateinit var mViewBinding: VB
     private lateinit var mViewModel: VM
@@ -32,7 +27,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel> : DaggerFragme
         savedInstanceState: Bundle?
     ): View? {
         mViewBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        mViewModel = ViewModelProvider(this, factory)[getViewModel()]
+        mViewModel = ViewModelProvider(this)[getViewModel()]
 
         return mViewBinding.root
     }
