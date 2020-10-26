@@ -1,16 +1,16 @@
-package com.laam.moviedb_cleanarch.presentation.tv
+package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class TvViewModelTest {
+class TvShowViewModelTest {
 
-    private lateinit var viewModel: TvViewModel
+    private lateinit var viewModel: TvShowViewModel
 
     @Before
     fun setUp() {
-        viewModel = TvViewModel()
+        viewModel = TvShowViewModel()
     }
 
     @Test

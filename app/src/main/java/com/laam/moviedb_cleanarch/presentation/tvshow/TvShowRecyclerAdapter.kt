@@ -1,4 +1,4 @@
-package com.laam.moviedb_cleanarch.presentation.tv
+package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
