@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         val fragmentName = arrayListOf(
             getString(R.string.movie),
-            getString(R.string.tv)
+            getString(R.string.tv_show)
         )
 
         val pagerAdapter =
