@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laam.core.model.Movie
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemMovieBinding
+import com.laam.moviedb_cleanarch.framework.model.MovieEntity
 
-class MovieRecyclerAdapter : ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MovieRecyclerAdapter : ListAdapter<MovieEntity, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,19 +31,19 @@ class MovieRecyclerAdapter : ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>
     inner class ViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieEntity) {
             binding.data = movie
         }
     }
 
     companion object {
 
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
 
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
                 oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
                 oldItem.id == newItem.id
         }
     }
