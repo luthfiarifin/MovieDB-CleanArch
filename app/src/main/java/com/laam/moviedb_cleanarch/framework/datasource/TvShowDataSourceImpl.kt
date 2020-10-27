@@ -7,4 +7,6 @@ import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
 class TvShowDataSourceImpl : TvShowDataSource {
 
     override fun getAll(): List<TvShow> = TvShowDummy.generateDummyTvShow()
+
+    override fun get(id: Long): TvShow? = TvShowDummy.generateDummyTvShow().find { it.id == id }
 }
