@@ -1,4 +1,4 @@
-package com.laam.moviedb_cleanarch.presentation.tv
+package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,8 @@ import com.laam.core.model.TvShow
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemTvShowBinding
 
-class TvShowRecyclerAdapter : ListAdapter<TvShow, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class TvShowRecyclerAdapter(private val callback: Callback) :
+    ListAdapter<TvShow, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,9 +31,17 @@ class TvShowRecyclerAdapter : ListAdapter<TvShow, TvShowRecyclerAdapter.ViewHold
     inner class ViewHolder(private val binding: ItemTvShowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: TvShow) {
-            binding.data = movie
+        fun bind(tvShow: TvShow) {
+            binding.data = tvShow
+
+            binding.root.setOnClickListener {
+                callback.onItemClick(tvShow.id)
+            }
         }
+    }
+
+    interface Callback {
+        fun onItemClick(id: Long)
     }
 
     companion object {

@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.laam.moviedb_cleanarch.R
 
 abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel> : AppCompatActivity() {
 
@@ -28,4 +29,12 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel> : AppCompatAct
     abstract fun getViewModel(): Class<VM>
 
     abstract fun getLayoutId(): Int
+
+    fun setAsChildActivity() {
+        supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+        }
+    }
 }

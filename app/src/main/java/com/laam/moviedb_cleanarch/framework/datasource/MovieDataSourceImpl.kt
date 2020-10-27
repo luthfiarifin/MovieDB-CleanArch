@@ -7,4 +7,6 @@ import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 class MovieDataSourceImpl : MovieDataSource {
 
     override fun getAll(): List<Movie> = MovieDummy.generateDummyMovie()
+
+    override fun get(id: Long): Movie? = MovieDummy.generateDummyMovie().find { it.id == id }
 }

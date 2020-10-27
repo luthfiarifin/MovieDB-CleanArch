@@ -1,4 +1,4 @@
-package com.laam.moviedb_cleanarch.presentation.tv
+package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import com.laam.core.usecase.tv.GetAllTvShows
 

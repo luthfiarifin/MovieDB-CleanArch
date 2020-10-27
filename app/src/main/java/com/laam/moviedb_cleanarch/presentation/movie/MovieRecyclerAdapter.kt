@@ -10,7 +10,8 @@ import com.laam.core.model.Movie
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemMovieBinding
 
-class MovieRecyclerAdapter : ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MovieRecyclerAdapter(private val callback: Callback) :
+    ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,7 +33,15 @@ class MovieRecyclerAdapter : ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>
 
         fun bind(movie: Movie) {
             binding.data = movie
+
+            binding.root.setOnClickListener {
+                callback.onItemClick(movie.id)
+            }
         }
+    }
+
+    interface Callback {
+        fun onItemClick(id: Long)
     }
 
     companion object {

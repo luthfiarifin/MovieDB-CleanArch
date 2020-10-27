@@ -20,5 +20,28 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.laam.moviedb_cleanarch.presentation.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tvShowDetailFragment"
+            app:destination="@id/tvShowDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailFragment"
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvShowDetailFragment"
+        android:name="com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailFragment"
+        android:label="TvShowDetailFragment" >
+        <argument
+            android:name="tvShowId"
+            app:argType="long" />
+    </fragment>
 </navigation>

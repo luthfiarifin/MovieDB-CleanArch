@@ -24,12 +24,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun setUpNavigation() {
+        val fragmentWithoutToolbar = arrayListOf(
+            R.id.splashFragment,
+            R.id.movieDetailFragment,
+            R.id.tvShowDetailFragment
+        )
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
 
         navHostFragment.navController.let { navController ->
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.splashFragment) supportActionBar?.hide()
+                if (destination.id in fragmentWithoutToolbar) supportActionBar?.hide()
                 else supportActionBar?.show()
             }
         }

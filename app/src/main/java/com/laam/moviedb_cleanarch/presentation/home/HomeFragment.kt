@@ -9,7 +9,7 @@ import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentHomeBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.movie.MovieFragment
-import com.laam.moviedb_cleanarch.presentation.tv.TvShowFragment
+import com.laam.moviedb_cleanarch.presentation.tvshow.TvShowFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
