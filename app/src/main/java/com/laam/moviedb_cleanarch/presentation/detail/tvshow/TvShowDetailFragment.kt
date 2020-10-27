@@ -20,7 +20,8 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
     }
 
     private fun setUpViewModelVariable() {
-        val tvShowId = arguments?.let { TvShowDetailFragmentArgs.fromBundle(it).tvShowId }
+        val tvShowId = arguments?.let { TvShowDetailFragmentArgs.fromBundle(it).tvShowId } ?: -1L
+        viewModel.setTvShow(tvShowId)
     }
 
     private fun setUpBinding() {
