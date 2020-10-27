@@ -5,4 +5,5 @@
     <string name="tv_show">Tv Show</string>
     <string name="movie_image">Movie image</string>
     <string name="tv_show_image">Tv show image</string>
+    <string name="date_icon">Date icon</string>
 </resources>
