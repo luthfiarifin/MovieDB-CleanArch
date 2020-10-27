@@ -10,7 +10,7 @@ import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemTvShowBinding
 import com.laam.moviedb_cleanarch.framework.model.TvShowEntity
 
-class TvShowRecyclerAdapter : ListAdapter<TvShowEntity, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class TvShowRecyclerAdapter(private val callback: Callback) : ListAdapter<TvShowEntity, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,7 +32,15 @@ class TvShowRecyclerAdapter : ListAdapter<TvShowEntity, TvShowRecyclerAdapter.Vi
 
         fun bind(tvShow: TvShowEntity) {
             binding.data = tvShow
+
+            binding.root.setOnClickListener {
+                callback.onItemClick(tvShow)
+            }
         }
+    }
+
+    interface Callback {
+        fun onItemClick(tvShow: TvShowEntity)
     }
 
     companion object {

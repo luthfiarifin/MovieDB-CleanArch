@@ -26,7 +26,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun setUpNavigation() {
         val fragmentWithoutToolbar = arrayListOf(
             R.id.splashFragment,
-            R.id.movieDetailFragment
+            R.id.movieDetailFragment,
+            R.id.tvShowDetailFragment
         )
 
         val navHostFragment =

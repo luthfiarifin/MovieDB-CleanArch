@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_homeFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tvShowDetailFragment"
+            app:destination="@id/tvShowDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -32,5 +35,13 @@
         <argument
             android:name="movie"
             app:argType="com.laam.moviedb_cleanarch.framework.model.MovieEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvShowDetailFragment"
+        android:name="com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailFragment"
+        android:label="TvShowDetailFragment" >
+        <argument
+            android:name="tvShow"
+            app:argType="com.laam.moviedb_cleanarch.framework.model.TvShowEntity" />
     </fragment>
 </navigation>
