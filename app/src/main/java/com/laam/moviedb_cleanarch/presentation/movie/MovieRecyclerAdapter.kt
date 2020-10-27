@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.laam.core.model.Movie
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemMovieBinding
-import com.laam.moviedb_cleanarch.framework.model.MovieEntity
 
 class MovieRecyclerAdapter(private val callback: Callback) :
-    ListAdapter<MovieEntity, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<Movie, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -31,27 +31,27 @@ class MovieRecyclerAdapter(private val callback: Callback) :
     inner class ViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: Movie) {
             binding.data = movie
 
             binding.root.setOnClickListener {
-                callback.onItemClick(movie)
+                callback.onItemClick(movie.id)
             }
         }
     }
 
     interface Callback {
-        fun onItemClick(movie: MovieEntity)
+        fun onItemClick(id: Long)
     }
 
     companion object {
 
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
 
-            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem.id == newItem.id
         }
     }

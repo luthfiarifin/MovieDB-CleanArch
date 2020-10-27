@@ -5,7 +5,6 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieBinding
-import com.laam.moviedb_cleanarch.framework.model.MovieEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
 
@@ -35,8 +34,8 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(),
         }
     }
 
-    override fun onItemClick(movie: MovieEntity) {
-        val action = HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(movie)
+    override fun onItemClick(id: Long) {
+        val action = HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(id)
         view?.let { Navigation.findNavController(it).navigate(action) }
     }
 }

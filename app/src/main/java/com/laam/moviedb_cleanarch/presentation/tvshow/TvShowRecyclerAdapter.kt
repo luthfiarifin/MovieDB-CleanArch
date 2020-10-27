@@ -6,11 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.laam.core.model.TvShow
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemTvShowBinding
-import com.laam.moviedb_cleanarch.framework.model.TvShowEntity
 
-class TvShowRecyclerAdapter(private val callback: Callback) : ListAdapter<TvShowEntity, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class TvShowRecyclerAdapter(private val callback: Callback) :
+    ListAdapter<TvShow, TvShowRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,27 +31,27 @@ class TvShowRecyclerAdapter(private val callback: Callback) : ListAdapter<TvShow
     inner class ViewHolder(private val binding: ItemTvShowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(tvShow: TvShowEntity) {
+        fun bind(tvShow: TvShow) {
             binding.data = tvShow
 
             binding.root.setOnClickListener {
-                callback.onItemClick(tvShow)
+                callback.onItemClick(tvShow.id)
             }
         }
     }
 
     interface Callback {
-        fun onItemClick(tvShow: TvShowEntity)
+        fun onItemClick(id: Long)
     }
 
     companion object {
 
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShow>() {
 
-            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean =
+            override fun areItemsTheSame(oldItem: TvShow, newItem: TvShow): Boolean =
                 oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean =
+            override fun areContentsTheSame(oldItem: TvShow, newItem: TvShow): Boolean =
                 oldItem.id == newItem.id
         }
     }

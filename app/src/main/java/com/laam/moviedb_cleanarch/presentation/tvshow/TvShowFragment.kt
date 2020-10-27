@@ -5,11 +5,11 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentTvBinding
-import com.laam.moviedb_cleanarch.framework.model.TvShowEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
 
-class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(), TvShowRecyclerAdapter.Callback {
+class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(),
+    TvShowRecyclerAdapter.Callback {
 
     override fun getLayoutId(): Int = R.layout.fragment_tv
 
@@ -34,8 +34,8 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(), TvSho
         }
     }
 
-    override fun onItemClick(tvShow: TvShowEntity) {
-        val action = HomeFragmentDirections.actionHomeFragmentToTvShowDetailFragment(tvShow)
+    override fun onItemClick(id: Long) {
+        val action = HomeFragmentDirections.actionHomeFragmentToTvShowDetailFragment(id)
         view?.let { Navigation.findNavController(it).navigate(action) }
     }
 }

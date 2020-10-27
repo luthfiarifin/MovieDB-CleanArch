@@ -33,15 +33,15 @@
         android:name="com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailFragment"
         android:label="MovieDetailFragment" >
         <argument
-            android:name="movie"
-            app:argType="com.laam.moviedb_cleanarch.framework.model.MovieEntity" />
+            android:name="movieId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/tvShowDetailFragment"
         android:name="com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailFragment"
         android:label="TvShowDetailFragment" >
         <argument
-            android:name="tvShow"
-            app:argType="com.laam.moviedb_cleanarch.framework.model.TvShowEntity" />
+            android:name="tvShowId"
+            app:argType="long" />
     </fragment>
 </navigation>

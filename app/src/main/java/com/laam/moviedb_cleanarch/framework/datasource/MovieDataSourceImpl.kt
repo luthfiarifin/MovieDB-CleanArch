@@ -6,5 +6,5 @@ import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 
 class MovieDataSourceImpl : MovieDataSource {
 
-    override fun getAll(): List<Movie> = MovieDummy.generateDummyMovie().map { it.mapToMovie() }
+    override fun getAll(): List<Movie> = MovieDummy.generateDummyMovie()
 }
