@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.laam.core.model.Movie
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ItemMovieBinding
 import com.laam.moviedb_cleanarch.framework.model.MovieEntity
 
-class MovieRecyclerAdapter : ListAdapter<MovieEntity, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MovieRecyclerAdapter(private val callback: Callback) :
+    ListAdapter<MovieEntity, MovieRecyclerAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -33,7 +33,15 @@ class MovieRecyclerAdapter : ListAdapter<MovieEntity, MovieRecyclerAdapter.ViewH
 
         fun bind(movie: MovieEntity) {
             binding.data = movie
+
+            binding.root.setOnClickListener {
+                callback.onItemClick(movie)
+            }
         }
+    }
+
+    interface Callback {
+        fun onItemClick(movie: MovieEntity)
     }
 
     companion object {

@@ -20,5 +20,17 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.laam.moviedb_cleanarch.presentation.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailFragment"
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="movie"
+            app:argType="com.laam.moviedb_cleanarch.framework.model.MovieEntity" />
+    </fragment>
 </navigation>
