@@ -5,8 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.app.ShareCompat
-import androidx.fragment.app.FragmentActivity
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieDetailBinding
