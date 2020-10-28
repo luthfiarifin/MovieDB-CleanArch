@@ -20,12 +20,22 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViewBinding()
         setUpRvAdapter()
         setUpRecycler()
     }
 
+    private fun setUpViewBinding() {
+        viewBinding.viewModel = viewModel
+    }
+
     private fun setUpRvAdapter() {
-        rvAdapter.submitList(viewModel.movieList)
+        val list = viewModel.movieList
+
+        if (list.isNotEmpty())
+            rvAdapter.submitList(list)
+        else
+            viewModel.isEmptyData.set(true)
     }
 
     private fun setUpRecycler() {
