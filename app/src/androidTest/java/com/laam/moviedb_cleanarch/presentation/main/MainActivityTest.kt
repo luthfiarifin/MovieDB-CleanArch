@@ -10,6 +10,8 @@ import androidx.test.rule.ActivityTestRule
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
+import com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailViewModel
+import com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailViewModel
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,6 +19,9 @@ class MainActivityTest {
 
     private val dummyMovies = MovieDummy.generateDummyMovie()
     private val dummyTvShows = TvShowDummy.generateDummyTvShow()
+
+    private val movieDetailViewModel: MovieDetailViewModel = MovieDetailViewModel()
+    private val tvShowDetailViewModel: TvShowDetailViewModel = TvShowDetailViewModel()
 
     @get:Rule
     var activityRule = ActivityTestRule(MainActivity::class.java)
@@ -46,24 +51,30 @@ class MainActivityTest {
             )
         )
 
-        onView(withId(R.id.movieDetail_tv_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_tv_title)).check(matches(withText(dummyMovies[clickPosition].name)))
+        val movie = movieDetailViewModel.movie.get()
 
-        onView(withId(R.id.movieDetail_tv_tags)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_tv_tags)).check(matches(withText(dummyMovies[clickPosition].tags)))
+        if (movie != null && movieDetailViewModel.isNoData.get().not()) {
+            onView(withId(R.id.movieDetail_tv_title)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_title)).check(matches(withText(movie.name)))
 
-        onView(withId(R.id.movieDetail_tv_releaseDate)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_tv_releaseDate)).check(matches(withText(dummyMovies[clickPosition].releaseDate)))
+            onView(withId(R.id.movieDetail_tv_tags)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_tags)).check(matches(withText(movie.tags)))
 
-        onView(withId(R.id.movieDetail_tv_overview)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_tv_overview)).check(matches(withText(dummyMovies[clickPosition].overview)))
+            onView(withId(R.id.movieDetail_tv_releaseDate)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_releaseDate)).check(matches(withText(movie.releaseDate)))
 
-        onView(withId(R.id.movieDetail_tv_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_tv_rating)).check(matches(withText(dummyMovies[clickPosition].voteAverage.toString())))
+            onView(withId(R.id.movieDetail_tv_overview)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_overview)).check(matches(withText(movie.overview)))
 
-        onView(withId(R.id.movieDetail_rb_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_img_poster)).check(matches(isDisplayed()))
-        onView(withId(R.id.movieDetail_img_date)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_rating)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_tv_rating)).check(matches(withText(movie.voteAverage.toString())))
+
+            onView(withId(R.id.movieDetail_rb_rating)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_img_poster)).check(matches(isDisplayed()))
+            onView(withId(R.id.movieDetail_img_date)).check(matches(isDisplayed()))
+        } else {
+            onView(withId(R.id.movieDetail_img_noData)).check(matches(isDisplayed()))
+        }
     }
 
     @Test
@@ -95,19 +106,25 @@ class MainActivityTest {
             )
         )
 
-        onView(withId(R.id.tvShowDetail_tv_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvShowDetail_tv_title)).check(matches(withText(dummyTvShows[clickPosition].name)))
+        val tvShow = tvShowDetailViewModel.tvShow.get()
 
-        onView(withId(R.id.tvShowDetail_tv_tags)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvShowDetail_tv_tags)).check(matches(withText(dummyTvShows[clickPosition].tags)))
+        if (tvShow != null) {
+            onView(withId(R.id.tvShowDetail_tv_title)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_tv_title)).check(matches(withText(tvShow.name)))
 
-        onView(withId(R.id.tvShowDetail_tv_overview)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvShowDetail_tv_overview)).check(matches(withText(dummyTvShows[clickPosition].overview)))
+            onView(withId(R.id.tvShowDetail_tv_tags)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_tv_tags)).check(matches(withText(tvShow.tags)))
 
-        onView(withId(R.id.tvShowDetail_tv_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvShowDetail_tv_rating)).check(matches(withText(dummyTvShows[clickPosition].voteAverage.toString())))
+            onView(withId(R.id.tvShowDetail_tv_overview)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_tv_overview)).check(matches(withText(tvShow.overview)))
 
-        onView(withId(R.id.tvShowDetail_rb_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.tvShowDetail_img_poster)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_tv_rating)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_tv_rating)).check(matches(withText(tvShow.voteAverage.toString())))
+
+            onView(withId(R.id.tvShowDetail_rb_rating)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvShowDetail_img_poster)).check(matches(isDisplayed()))
+        } else {
+            onView(withId(R.id.tvShowDetail_img_noData)).check(matches(isDisplayed()))
+        }
     }
 }
