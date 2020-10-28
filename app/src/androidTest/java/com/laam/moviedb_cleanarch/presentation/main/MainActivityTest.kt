@@ -10,8 +10,6 @@ import androidx.test.rule.ActivityTestRule
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
-import com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailViewModel
-import com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailViewModel
 import org.junit.Rule
 import org.junit.Test
 
