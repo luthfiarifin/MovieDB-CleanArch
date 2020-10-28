@@ -27,6 +27,7 @@ class MovieDetailViewModelTest {
         assertEquals(dummyMovie.overview, selectedMovie?.overview)
         assertEquals(dummyMovie.voteAverage, selectedMovie?.voteAverage)
         assertEquals(dummyMovie.poster, selectedMovie?.poster)
+        assertEquals(dummyMovie.releaseDate, selectedMovie?.releaseDate)
         assertEquals(dummyMovie.tags, selectedMovie?.tags)
     }
 }
