@@ -23,6 +23,7 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingHorizontal="8dp"
+            android:visibility="@{viewModel.isEmptyData ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
