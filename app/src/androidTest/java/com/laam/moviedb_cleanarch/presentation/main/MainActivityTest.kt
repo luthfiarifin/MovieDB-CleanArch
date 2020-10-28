@@ -23,12 +23,16 @@ class MainActivityTest {
 
     @Test
     fun loadMovie() {
-        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.rv_movie)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                dummyMovies.size
+        if (dummyMovies.isNotEmpty()) {
+            onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
+            onView(withId(R.id.rv_movie)).perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                    dummyMovies.size
+                )
             )
-        )
+        } else {
+            onView(withId(R.id.movie_img_empty)).check(matches(isDisplayed()))
+        }
     }
 
     @Test
@@ -66,12 +70,16 @@ class MainActivityTest {
     fun loadTvShow() {
         onView(withText(R.string.tv_show)).perform(click())
 
-        onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
-        onView(withId(R.id.rv_tv_show)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                dummyTvShows.size
+        if (dummyTvShows.isNotEmpty()) {
+            onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
+            onView(withId(R.id.rv_tv_show)).perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                    dummyTvShows.size
+                )
             )
-        )
+        } else {
+            onView(withId(R.id.tvShow_img_empty)).check(matches(isDisplayed()))
+        }
     }
 
     @Test
