@@ -20,12 +20,22 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViewBinding()
         setUpRvAdapter()
         setUpRecycler()
     }
 
+    private fun setUpViewBinding() {
+        viewBinding.viewModel = viewModel
+    }
+
     private fun setUpRvAdapter() {
-        rvAdapter.submitList(viewModel.tvShowList)
+        val list = viewModel.tvShowList
+
+        if (list.isNotEmpty())
+            rvAdapter.submitList(list)
+        else
+            viewModel.isEmptyData.set(true)
     }
 
     private fun setUpRecycler() {

@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.laam.moviedb_cleanarch.presentation.tvshow.TvShowViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,6 +23,7 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingHorizontal="8dp"
+            android:visibility="@{viewModel.isEmptyData ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,5 +31,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_movie" />
+
+        <ImageView
+            android:id="@+id/tvShow_img_empty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/empty_data_image"
+            android:padding="50dp"
+            android:src="@drawable/ic_undraw_empty"
+            android:visibility="@{viewModel.isEmptyData ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
