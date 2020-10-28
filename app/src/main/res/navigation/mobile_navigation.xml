@@ -38,7 +38,8 @@
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
-            app:uri="movie.laamdev.com/movie/{movieId}" />
+            app:uri="movie.laamdev.com/movie/{movieId}"
+            tools:targetApi="m" />
     </fragment>
     <fragment
         android:id="@+id/tvShowDetailFragment"
@@ -50,6 +51,7 @@
         <deepLink
             android:id="@+id/deepLink2"
             android:autoVerify="true"
-            app:uri="movie.laamdev.com/tv_show/{tvShowId}" />
+            app:uri="movie.laamdev.com/tv_show/{tvShowId}"
+            tools:targetApi="m" />
     </fragment>
 </navigation>
