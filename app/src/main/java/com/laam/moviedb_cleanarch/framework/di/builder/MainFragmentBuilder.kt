@@ -1,5 +1,7 @@
 package com.laam.moviedb_cleanarch.framework.di.builder
 
+import com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailFragment
+import com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragment
 import com.laam.moviedb_cleanarch.presentation.movie.MovieFragment
 import com.laam.moviedb_cleanarch.presentation.splash.SplashFragment
@@ -21,4 +23,10 @@ abstract class MainFragmentBuilder {
 
     @ContributesAndroidInjector
     abstract fun contributeTvShowFragment(): TvShowFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMovieDetailFragment(): MovieDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeTvShowDetailFragment(): TvShowDetailFragment
 }
