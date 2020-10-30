@@ -1,6 +1,6 @@
 package com.laam.moviedb_cleanarch.presentation.detail.tvshow
 
-import com.laam.core.repository.tv.TvShowRepository
+import com.laam.core.repository.TvShowRepository
 import com.laam.core.usecase.tv.GetTvShow
 import javax.inject.Inject
 

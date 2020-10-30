@@ -1,9 +1,9 @@
 package com.laam.moviedb_cleanarch.framework.di.module
 
-import com.laam.core.repository.movie.MovieRepository
-import com.laam.core.repository.tv.TvShowRepository
-import com.laam.moviedb_cleanarch.framework.datasource.MovieDataSourceImpl
-import com.laam.moviedb_cleanarch.framework.datasource.TvShowDataSourceImpl
+import com.laam.core.repository.MovieRepository
+import com.laam.core.repository.TvShowRepository
+import com.laam.moviedb_cleanarch.framework.datasource.MovieRepositoryImpl
+import com.laam.moviedb_cleanarch.framework.datasource.TvShowRepositoryImpl
 import dagger.Module
 import dagger.Provides
 
@@ -12,11 +12,12 @@ object RepositoryModule {
 
     @Provides
     @JvmStatic
-    fun provideMovieRepository(dataSource: MovieDataSourceImpl) =
-        MovieRepository(dataSource)
+    fun provideMovieRepository(): MovieRepository =
+        MovieRepositoryImpl()
+
 
     @Provides
     @JvmStatic
-    fun provideTvShowRepository(dataSource: TvShowDataSourceImpl) =
-        TvShowRepository(dataSource)
+    fun provideTvShowRepository(): TvShowRepository =
+        TvShowRepositoryImpl()
 }

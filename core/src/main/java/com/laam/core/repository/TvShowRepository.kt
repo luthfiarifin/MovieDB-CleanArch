@@ -1,8 +1,8 @@
-package com.laam.core.repository.tv
+package com.laam.core.repository
 
 import com.laam.core.model.TvShow
 
-interface TvShowDataSource {
+interface TvShowRepository {
 
     fun getAll(): List<TvShow>
 
