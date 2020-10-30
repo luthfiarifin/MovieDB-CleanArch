@@ -7,15 +7,13 @@ import com.laam.core.repository.movie.MovieRepository
 import com.laam.core.usecase.movie.GetMovie
 import com.laam.moviedb_cleanarch.framework.datasource.MovieDataSourceImpl
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
+import javax.inject.Inject
 
-class MovieDetailViewModel : BaseViewModel() {
+class MovieDetailViewModel @Inject constructor(
+    private val interactors: MovieDetailInteractors
+) : BaseViewModel() {
 
     val isNoData: ObservableBoolean = ObservableBoolean(false)
-
-    private val repository: MovieRepository = MovieRepository(MovieDataSourceImpl())
-    private val getMovie: GetMovie = GetMovie(repository)
-    private val interactors: MovieDetailInteractors = MovieDetailInteractors(getMovie)
-
     val movie: ObservableField<Movie> = ObservableField()
 
     fun setMovie(id: Long) {
