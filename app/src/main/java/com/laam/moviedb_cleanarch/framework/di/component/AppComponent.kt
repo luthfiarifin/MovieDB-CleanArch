@@ -2,6 +2,8 @@ package com.laam.moviedb_cleanarch.framework.di.component
 
 import android.app.Application
 import com.laam.moviedb_cleanarch.framework.di.builder.ActivityBuilder
+import com.laam.moviedb_cleanarch.framework.di.module.InteractorsModule
+import com.laam.moviedb_cleanarch.framework.di.module.RepositoryModule
 import com.laam.moviedb_cleanarch.framework.di.module.ViewModelModule
 import com.laam.moviedb_cleanarch.framework.di.module.ViewModelProviderFactoryModule
 import com.laam.moviedb_cleanarch.presentation.MovieApplication
@@ -17,7 +19,9 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         ActivityBuilder::class,
         ViewModelProviderFactoryModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        RepositoryModule::class,
+        InteractorsModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MovieApplication> {
