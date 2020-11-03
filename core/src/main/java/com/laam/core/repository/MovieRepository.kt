@@ -1,8 +1,8 @@
-package com.laam.core.repository.movie
+package com.laam.core.repository
 
 import com.laam.core.model.Movie
 
-interface MovieDataSource {
+interface MovieRepository {
 
     fun getAll(): List<Movie>
 

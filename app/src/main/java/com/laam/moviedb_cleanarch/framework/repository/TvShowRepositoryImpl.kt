@@ -1,10 +1,11 @@
-package com.laam.moviedb_cleanarch.framework.datasource
+package com.laam.moviedb_cleanarch.framework.repository
 
 import com.laam.core.model.TvShow
-import com.laam.core.repository.tv.TvShowDataSource
+import com.laam.core.repository.TvShowRepository
 import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
+import javax.inject.Inject
 
-class TvShowDataSourceImpl : TvShowDataSource {
+class TvShowRepositoryImpl @Inject constructor() : TvShowRepository {
 
     override fun getAll(): List<TvShow> = TvShowDummy.generateDummyTvShow()
 

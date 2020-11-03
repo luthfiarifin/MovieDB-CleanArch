@@ -1,8 +1,12 @@
 package com.laam.moviedb_cleanarch.presentation.movie
 
+import com.laam.core.repository.MovieRepository
 import com.laam.core.usecase.movie.GetAllMovies
+import javax.inject.Inject
 
-data class MovieListInteractors(
+class MovieListInteractors @Inject constructor(
+    repository: MovieRepository
+) {
 
-    val getAllMovies: GetAllMovies
-)
+    val getAllMovies: GetAllMovies = GetAllMovies(repository)
+}
