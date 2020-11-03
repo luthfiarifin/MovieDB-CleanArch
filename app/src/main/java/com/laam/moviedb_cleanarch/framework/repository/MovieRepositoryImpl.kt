@@ -1,4 +1,4 @@
-package com.laam.moviedb_cleanarch.framework.datasource
+package com.laam.moviedb_cleanarch.framework.repository
 
 import com.laam.core.model.Movie
 import com.laam.core.repository.MovieRepository
