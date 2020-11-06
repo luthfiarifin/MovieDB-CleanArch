@@ -4,5 +4,5 @@ import com.laam.core.repository.MovieRepository
 
 class GetAllMovies(private val repository: MovieRepository) {
 
-    operator fun invoke() = repository.getAll()
+    suspend operator fun invoke() = repository.getAll()
 }
