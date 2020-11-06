@@ -5,12 +5,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieDetailBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.main.MainActivity
 import com.laam.moviedb_cleanarch.presentation.util.ShareUtil.shareText
+import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
 class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetailViewModel>() {
 
@@ -24,6 +26,13 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
         setUpToolbar()
         setUpBinding()
         setUpViewModelVariable()
+        observeMovieError()
+    }
+
+    private fun observeMovieError() {
+        viewModel.movieError.observe(viewLifecycleOwner, { message ->
+            view?.showSnackbar(message)
+        })
     }
 
     private fun setUpToolbar() {
@@ -36,7 +45,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
 
     private fun setUpViewModelVariable() {
         val movieId = arguments?.let { MovieDetailFragmentArgs.fromBundle(it).movieId } ?: -1L
-        viewModel.setMovie(movieId)
+        viewModel.getMovie(movieId)
     }
 
     private fun setUpBinding() {
