@@ -19,16 +19,18 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "MOVIE_DB_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "MOVIE_DB_IMAGE_URL", "\"https://image.tmdb.org/t/p/w185\""
+        buildConfigField "String", "MOVIE_DB_KEY", "\"1e924ebb18bb8856e9245213d420cbcb\""
+        buildConfigField "String", "MOVIE_DB_REGION", "\"id\""
+        buildConfigField "String", "WEB_URL", "\"themoviedb.org\""
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "WEB_URL", "\"movie.laamdev.com\""
-        }
-        debug {
-            buildConfigField "String", "WEB_URL", "\"movie.laamdev.com\""
         }
     }
 
