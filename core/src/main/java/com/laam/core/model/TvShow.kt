@@ -2,9 +2,9 @@ package com.laam.core.model
 
 data class TvShow(
     val id: Long,
-    val name: String,
-    val overview: String,
+    val name: String?,
+    val overview: String?,
     val voteAverage: Float,
-    val poster: Int,
-    val tags: String
+    val poster: String?,
+    val tags: String?
 )
