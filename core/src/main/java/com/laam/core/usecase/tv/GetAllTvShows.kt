@@ -4,5 +4,5 @@ import com.laam.core.repository.TvShowRepository
 
 class GetAllTvShows(private val repository: TvShowRepository) {
 
-    operator fun invoke() = repository.getAll()
+    suspend operator fun invoke() = repository.getAll()
 }
