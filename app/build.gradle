@@ -46,6 +46,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -95,6 +99,14 @@ dependencies {
 
     // Coil
     implementation "io.coil-kt:coil:$coil_version"
+
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version") {
+        exclude group: 'org.jetbrains.kotlinx'
+    }
+
+    // Mockito kotlin
+    testImplementation "androidx.arch.core:core-testing:$mockitoKotlinVersion"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
