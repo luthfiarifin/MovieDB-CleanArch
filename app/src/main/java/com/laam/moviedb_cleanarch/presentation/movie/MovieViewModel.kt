@@ -9,13 +9,20 @@ import com.laam.core.ext.repository.State
 import com.laam.core.model.Movie
 import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MovieViewModel @Inject constructor(
-    private val interactors: MovieListInteractors
-) : BaseViewModel() {
+class MovieViewModel(
+    private val interactors: MovieListInteractors,
+    coroutineScope: CoroutineScope? = null
+) : BaseViewModel(coroutineScope) {
+
+    @Inject
+    constructor(interactors: MovieListInteractors) : this(
+        interactors, null
+    )
 
     val isLoading: ObservableBoolean = ObservableBoolean(false)
     val isEmptyData: ObservableBoolean = ObservableBoolean(false)
@@ -33,7 +40,7 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun getMovies() {
-        viewModelScope.launch {
+        getViewModelScope().launch {
             interactors.getAllMovies.invoke().collect {
                 _moviesLiveData.postValue(it)
             }
