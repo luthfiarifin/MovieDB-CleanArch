@@ -9,13 +9,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
 import com.laam.core.model.Movie
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MovieDetailViewModel @Inject constructor(
-    private val interactors: MovieDetailInteractors
-) : BaseViewModel() {
+class MovieDetailViewModel(
+    private val interactors: MovieDetailInteractors,
+    coroutineScope: CoroutineScope? = null
+) : BaseViewModel(coroutineScope) {
+
+    @Inject
+    constructor(interactors: MovieDetailInteractors) : this(interactors, null)
 
     private var movieId: Long = 0L
 
@@ -34,7 +39,7 @@ class MovieDetailViewModel @Inject constructor(
     fun getMovie(id: Long) {
         movieId = id
 
-        viewModelScope.launch {
+        getViewModelScope().launch {
             interactors.getMovie.invoke(id).collect { state ->
                 when (state) {
                     is State.Loading -> {
