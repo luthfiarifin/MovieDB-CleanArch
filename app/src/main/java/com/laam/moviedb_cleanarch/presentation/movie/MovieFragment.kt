@@ -2,9 +2,7 @@ package com.laam.moviedb_cleanarch.presentation.movie
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import com.google.android.material.snackbar.Snackbar
 import com.laam.core.ext.repository.State
 import com.laam.core.model.Movie
 import com.laam.core.model.MoviePagination
@@ -14,14 +12,17 @@ import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
 import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
-class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(),
-    MovieRecyclerAdapter.Callback {
+class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.fragment_movie
 
     override fun getViewModel(): Class<MovieViewModel> = MovieViewModel::class.java
 
-    private val rvAdapter = MovieRecyclerAdapter(this)
+    private val rvAdapter by lazy {
+        MovieRecyclerAdapter { id ->
+            onItemClick(id)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,7 +73,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>(),
         }
     }
 
-    override fun onItemClick(id: Long) {
+    private fun onItemClick(id: Long) {
         val action = HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(id)
         view?.let { Navigation.findNavController(it).navigate(action) }
     }

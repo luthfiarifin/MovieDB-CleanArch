@@ -1,5 +1,6 @@
 package com.laam.core.ext.repository
 
+import com.laam.core.ext.idling.EspressoIdlingResource
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import java.lang.Exception
@@ -7,6 +8,8 @@ import java.lang.Exception
 abstract class NetworkBoundRepository<REQUEST, RESPONSE> {
 
     fun asFlow() = flow<State<RESPONSE>> {
+        EspressoIdlingResource.increment()
+
         emit(State.loading())
 
         try {
@@ -18,6 +21,8 @@ abstract class NetworkBoundRepository<REQUEST, RESPONSE> {
             } else {
                 emit(State.error(apiResponse.message()))
             }
+
+            EspressoIdlingResource.decrement()
         } catch (ex: Exception) {
             emit(State.error("Network error!"))
             ex.printStackTrace()

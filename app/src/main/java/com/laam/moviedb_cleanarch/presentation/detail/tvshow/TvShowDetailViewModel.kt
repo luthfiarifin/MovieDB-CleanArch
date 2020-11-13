@@ -39,7 +39,7 @@ class TvShowDetailViewModel(
         tvShowId = id
 
         getViewModelScope().launch {
-            interactors.getTvShow.invoke(id).collect { state ->
+            interactors.getTvShowUseCase.invoke(id).collect { state ->
                 when (state) {
                     is State.Loading -> {
                         isLoading.set(true)

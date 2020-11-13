@@ -4,7 +4,6 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
 import com.laam.core.model.Movie
@@ -40,7 +39,7 @@ class MovieDetailViewModel(
         movieId = id
 
         getViewModelScope().launch {
-            interactors.getMovie.invoke(id).collect { state ->
+            interactors.getMovieUseCase.invoke(id).collect { state ->
                 when (state) {
                     is State.Loading -> {
                         isLoading.set(true)

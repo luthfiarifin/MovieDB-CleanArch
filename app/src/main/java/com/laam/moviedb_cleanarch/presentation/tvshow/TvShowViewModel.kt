@@ -3,7 +3,6 @@ package com.laam.moviedb_cleanarch.presentation.tvshow
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
@@ -39,7 +38,7 @@ class TvShowViewModel(
 
     private fun getTvShows() {
         getViewModelScope().launch {
-            interactors.getAllTvShows.invoke().collect {
+            interactors.getAllTvShowsUseCase.invoke().collect {
                 _tvShowsLiveData.postValue(it)
             }
         }
