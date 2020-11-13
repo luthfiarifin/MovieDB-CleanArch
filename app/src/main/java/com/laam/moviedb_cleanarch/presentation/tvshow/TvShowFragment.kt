@@ -12,14 +12,17 @@ import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
 import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
-class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(),
-    TvShowRecyclerAdapter.Callback {
+class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.fragment_tv
 
     override fun getViewModel(): Class<TvShowViewModel> = TvShowViewModel::class.java
 
-    private val rvAdapter = TvShowRecyclerAdapter(this)
+    private val rvAdapter by lazy {
+        TvShowRecyclerAdapter { id ->
+            onItemClick(id)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,7 +73,7 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>(),
         }
     }
 
-    override fun onItemClick(id: Long) {
+    private fun onItemClick(id: Long) {
         val action = HomeFragmentDirections.actionHomeFragmentToTvShowDetailFragment(id)
         view?.let { Navigation.findNavController(it).navigate(action) }
     }
