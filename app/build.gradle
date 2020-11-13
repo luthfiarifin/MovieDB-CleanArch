@@ -16,18 +16,21 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "MOVIE_DB_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "MOVIE_DB_IMAGE_URL", "\"https://image.tmdb.org/t/p/w185\""
+        buildConfigField "String", "MOVIE_DB_KEY", "\"1e924ebb18bb8856e9245213d420cbcb\""
+        buildConfigField "String", "MOVIE_DB_REGION", "\"id\""
+        buildConfigField "String", "WEB_URL", "\"themoviedb.org\""
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "WEB_URL", "\"movie.laamdev.com\""
-        }
-        debug {
-            buildConfigField "String", "WEB_URL", "\"movie.laamdev.com\""
         }
     }
 
@@ -43,6 +46,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -54,6 +61,9 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
     implementation "androidx.legacy:legacy-support-v4:$legacy_version"
+
+    // Multidex
+    implementation "androidx.multidex:multidex:$multidex_version"
 
     // Recyclerview
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
@@ -75,9 +85,28 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
     // Mockito testing
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+
+    // Coil
+    implementation "io.coil-kt:coil:$coil_version"
+
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version") {
+        exclude group: 'org.jetbrains.kotlinx'
+    }
+
+    // Mockito kotlin
+    testImplementation "androidx.arch.core:core-testing:$mockitoKotlinVersion"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"

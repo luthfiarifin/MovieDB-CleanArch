@@ -12,38 +12,45 @@
         <import type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:isRefreshing="@{viewModel.isLoading}"
+        app:onRefreshListener="@{viewModel.onRefreshListener}">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tv_show"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingHorizontal="8dp"
-            android:visibility="@{viewModel.isEmptyData ? View.GONE : View.VISIBLE}"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="2"
-            tools:listitem="@layout/item_movie" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/tvShow_img_empty"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/empty_data_image"
-            android:padding="50dp"
-            android:src="@drawable/ic_undraw_empty"
-            android:visibility="@{viewModel.isEmptyData ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tv_show"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp"
+                android:visibility="@{viewModel.isEmptyData ? View.GONE : View.VISIBLE}"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spanCount="2"
+                tools:listitem="@layout/item_movie" />
+
+            <ImageView
+                android:id="@+id/tvShow_img_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/empty_data_image"
+                android:padding="50dp"
+                android:src="@drawable/ic_undraw_empty"
+                android:visibility="@{viewModel.isEmptyData ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

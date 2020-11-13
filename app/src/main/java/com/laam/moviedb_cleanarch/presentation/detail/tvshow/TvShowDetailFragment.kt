@@ -11,6 +11,7 @@ import com.laam.moviedb_cleanarch.databinding.FragmentTvshowDetailBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.main.MainActivity
 import com.laam.moviedb_cleanarch.presentation.util.ShareUtil.shareText
+import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
 class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDetailViewModel>() {
 
@@ -24,6 +25,13 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
         setUpToolbar()
         setUpBinding()
         setUpViewModelVariable()
+        observeTvShowError()
+    }
+
+    private fun observeTvShowError() {
+        viewModel.tvShowError.observe(viewLifecycleOwner, { message ->
+            view?.showSnackbar(message)
+        })
     }
 
     private fun setUpToolbar() {
@@ -36,7 +44,7 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
 
     private fun setUpViewModelVariable() {
         val tvShowId = arguments?.let { TvShowDetailFragmentArgs.fromBundle(it).tvShowId } ?: -1L
-        viewModel.setTvShow(tvShowId)
+        viewModel.getTvShow(tvShowId)
     }
 
     private fun setUpBinding() {
@@ -66,7 +74,7 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
     private fun onShareClick() {
         activity?.shareText(
             title = resources.getString(R.string.share_this_tv_show),
-            text = "${BuildConfig.WEB_URL}/tv_show/${viewModel.tvShow.get()?.id}"
+            text = "${BuildConfig.WEB_URL}/tv/${viewModel.tvShow.get()?.id}"
         )
     }
 }
