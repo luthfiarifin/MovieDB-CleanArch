@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
-import com.laam.core.model.Movie
+import com.laam.core.model.MovieEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
@@ -25,7 +25,7 @@ class MovieDetailViewModel(
 
     val isLoading: ObservableBoolean = ObservableBoolean(false)
     val isNoData: ObservableBoolean = ObservableBoolean(false)
-    val movie: ObservableField<Movie> = ObservableField()
+    val movieEntity: ObservableField<MovieEntity> = ObservableField()
 
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         getMovie(movieId)
@@ -57,9 +57,9 @@ class MovieDetailViewModel(
         }
     }
 
-    private fun setMovie(movie: Movie?) {
-        if (movie != null)
-            this.movie.set(movie)
+    private fun setMovie(movieEntity: MovieEntity?) {
+        if (movieEntity != null)
+            this.movieEntity.set(movieEntity)
         else
             this.isNoData.set(true)
     }

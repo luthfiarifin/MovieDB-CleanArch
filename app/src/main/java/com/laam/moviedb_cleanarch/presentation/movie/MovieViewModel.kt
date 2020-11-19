@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
-import com.laam.core.model.Movie
+import com.laam.core.model.MovieEntity
 import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +26,8 @@ class MovieViewModel(
     val isLoading: ObservableBoolean = ObservableBoolean(false)
     val isEmptyData: ObservableBoolean = ObservableBoolean(false)
 
-    private val _moviesLiveData = MutableLiveData<State<MoviePagination<Movie>>>()
-    val moviesLiveData: LiveData<State<MoviePagination<Movie>>>
+    private val _moviesLiveData = MutableLiveData<State<MoviePagination<MovieEntity>>>()
+    val moviesLiveData: LiveData<State<MoviePagination<MovieEntity>>>
         get() = _moviesLiveData
 
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {

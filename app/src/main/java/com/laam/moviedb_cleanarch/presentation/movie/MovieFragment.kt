@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import com.laam.core.ext.repository.State
-import com.laam.core.model.Movie
+import com.laam.core.model.MovieEntity
 import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieBinding
@@ -54,7 +54,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
         })
     }
 
-    private fun setMovieList(data: MoviePagination<Movie>) {
+    private fun setMovieList(data: MoviePagination<MovieEntity>) {
         if (data.results.isNotEmpty()) rvAdapter.submitList(data.results)
         else viewModel.isEmptyData.set(true)
     }
