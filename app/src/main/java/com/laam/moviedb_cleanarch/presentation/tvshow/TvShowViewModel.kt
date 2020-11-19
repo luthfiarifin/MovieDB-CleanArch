@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
@@ -24,8 +24,8 @@ class TvShowViewModel(
     val isLoading: ObservableBoolean = ObservableBoolean(false)
     val isEmptyData: ObservableBoolean = ObservableBoolean(false)
 
-    private val _tvShowsLiveData = MutableLiveData<State<MoviePagination<TvShow>>>()
-    val tvShowsLiveData: LiveData<State<MoviePagination<TvShow>>>
+    private val _tvShowsLiveData = MutableLiveData<State<MoviePagination<TvShowEntity>>>()
+    val tvShowsLiveData: LiveData<State<MoviePagination<TvShowEntity>>>
         get() = _tvShowsLiveData
 
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {

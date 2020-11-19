@@ -5,7 +5,7 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentTvBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
@@ -54,7 +54,7 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>() {
         })
     }
 
-    private fun setTvShowList(data: MoviePagination<TvShow>) {
+    private fun setTvShowList(data: MoviePagination<TvShowEntity>) {
         if (data.results.isNotEmpty()) rvAdapter.submitList(data.results)
         else viewModel.isEmptyData.set(true)
     }

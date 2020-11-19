@@ -2,7 +2,7 @@ package com.laam.moviedb_cleanarch.presentation.detail.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.laam.core.ext.repository.State
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
 import com.laam.moviedb_cleanarch.framework.repository.TvShowRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +42,7 @@ class TvShowDetailViewModelTest {
 
     @Test
     fun getTvShow() = runBlockingTest {
-        val resultState: State.Success<TvShow?> = State.Success(dummyTvShow)
+        val resultState: State.Success<TvShowEntity?> = State.Success(dummyTvShow)
         Mockito.`when`(tvShowRepositoryImpl.get(dummyTvShow.id)).thenReturn(flowOf(resultState))
 
         val interactors = TvShowDetailInteractors(tvShowRepositoryImpl)
@@ -50,7 +50,7 @@ class TvShowDetailViewModelTest {
             getTvShow(dummyTvShow.id)
         }
 
-        val selectedTvShow = viewModel.tvShow.get()
+        val selectedTvShow = viewModel.tvShowEntity.get()
         assertNotNull(selectedTvShow)
 
         assertEquals(dummyTvShow.id, selectedTvShow?.id)

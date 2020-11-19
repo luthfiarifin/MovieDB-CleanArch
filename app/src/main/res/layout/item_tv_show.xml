@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.laam.core.model.TvShow" />
+            type="com.laam.core.model.TvShowEntity" />
     </data>
 
     <androidx.cardview.widget.CardView

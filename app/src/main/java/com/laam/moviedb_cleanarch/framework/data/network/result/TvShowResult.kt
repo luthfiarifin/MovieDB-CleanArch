@@ -1,6 +1,6 @@
 package com.laam.moviedb_cleanarch.framework.data.network.result
 
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.squareup.moshi.Json
 
@@ -18,7 +18,7 @@ data class TvShowResult(
     @Json(name = "vote_count") val voteCount: Int = 0
 ) {
 
-    fun mapToTvShow() = TvShow(
+    fun mapToTvShow() = TvShowEntity(
         id, name, overview, voteAverage,
         "${BuildConfig.MOVIE_DB_IMAGE_URL}/$posterPath", null
     )
