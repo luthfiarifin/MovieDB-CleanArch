@@ -36,19 +36,18 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShows() = runBlockingTest {
-        val resultState =
-            State.Success(MoviePagination(results = TvShowDummy.generateDummyTvShow()))
+        val resultState = State.Success(Pair(1, TvShowDummy.generateDummyTvShow()))
 
-        Mockito.`when`(tvShowRepositoryImpl.getAll()).thenReturn(flowOf(resultState))
+        Mockito.`when`(tvShowRepositoryImpl.getAll(1)).thenReturn(flowOf(resultState))
 
         val interactors = TvShowListInteractors(tvShowRepositoryImpl)
         viewModel = TvShowViewModel(interactors, testScope)
 
         val list = viewModel.tvShowsLiveData.value
-        Mockito.verify(tvShowRepositoryImpl).getAll()
+        Mockito.verify(tvShowRepositoryImpl).getAll(1)
         Assert.assertNotNull(list)
 
-        Assert.assertEquals(12, (list as State.Success?)?.data?.results?.size)
+        Assert.assertEquals(12, (list as State.Success?)?.data?.second?.size)
     }
 
     @After

@@ -74,7 +74,7 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
     private fun onShareClick() {
         activity?.shareText(
             title = resources.getString(R.string.share_this_tv_show),
-            text = "${BuildConfig.WEB_URL}/tv/${viewModel.tvShow.get()?.id}"
+            text = "${BuildConfig.WEB_URL}/tv/${viewModel.tvShowEntity.get()?.id}"
         )
     }
 }

@@ -2,10 +2,7 @@ package com.laam.moviedb_cleanarch.framework.di.component
 
 import android.app.Application
 import com.laam.moviedb_cleanarch.framework.di.builder.ActivityBuilder
-import com.laam.moviedb_cleanarch.framework.di.module.NetworkModule
-import com.laam.moviedb_cleanarch.framework.di.module.RepositoryModule
-import com.laam.moviedb_cleanarch.framework.di.module.ViewModelModule
-import com.laam.moviedb_cleanarch.framework.di.module.ViewModelProviderFactoryModule
+import com.laam.moviedb_cleanarch.framework.di.module.*
 import com.laam.moviedb_cleanarch.presentation.MovieApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -21,7 +18,8 @@ import javax.inject.Singleton
         ViewModelProviderFactoryModule::class,
         ViewModelModule::class,
         RepositoryModule::class,
-        NetworkModule::class
+        NetworkModule::class,
+        DatabaseModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MovieApplication> {

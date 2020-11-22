@@ -2,7 +2,6 @@ package com.laam.moviedb_cleanarch.presentation.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.laam.core.ext.repository.State
-import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 import com.laam.moviedb_cleanarch.framework.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -42,18 +41,18 @@ class MovieViewModelTest {
 
     @Test
     fun getMovieList() = runBlockingTest {
-        val resultState = State.Success(MoviePagination(results = MovieDummy.generateDummyMovie()))
+        val resultState = State.Success(Pair(1, MovieDummy.generateDummyMovie()))
 
-        `when`(movieRepositoryImpl.getAll()).thenReturn(flowOf(resultState))
+        `when`(movieRepositoryImpl.getAll(1)).thenReturn(flowOf(resultState))
 
         val interactors = MovieListInteractors(movieRepositoryImpl)
         viewModel = MovieViewModel(interactors, testScope)
 
         val list = viewModel.moviesLiveData.value
-        verify(movieRepositoryImpl).getAll()
+        verify(movieRepositoryImpl).getAll(1)
         assertNotNull(list)
 
-        assertEquals(12, (list as State.Success?)?.data?.results?.size)
+        assertEquals(12, (list as State.Success?)?.data?.second?.size)
     }
 
     @After

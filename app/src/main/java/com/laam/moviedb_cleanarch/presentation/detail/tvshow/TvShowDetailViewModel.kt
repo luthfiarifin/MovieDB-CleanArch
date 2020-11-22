@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.laam.core.ext.repository.State
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
@@ -25,7 +25,7 @@ class TvShowDetailViewModel(
 
     val isLoading: ObservableBoolean = ObservableBoolean(false)
     val isNoData: ObservableBoolean = ObservableBoolean(false)
-    val tvShow: ObservableField<TvShow> = ObservableField()
+    val tvShowEntity: ObservableField<TvShowEntity> = ObservableField()
 
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         getTvShow(tvShowId)
@@ -51,15 +51,16 @@ class TvShowDetailViewModel(
                     is State.Error -> {
                         isLoading.set(false)
                         _tvShowError.postValue(state.message)
+                        setTvShow(state.data)
                     }
                 }
             }
         }
     }
 
-    private fun setTvShow(tvShow: TvShow?) {
-        if (tvShow != null)
-            this.tvShow.set(tvShow)
+    private fun setTvShow(tvShowEntity: TvShowEntity?) {
+        if (tvShowEntity != null)
+            this.tvShowEntity.set(tvShowEntity)
         else
             isNoData.set(true)
     }

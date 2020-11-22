@@ -2,7 +2,7 @@ package com.laam.moviedb_cleanarch.presentation.detail.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.laam.core.ext.repository.State
-import com.laam.core.model.Movie
+import com.laam.core.model.MovieEntity
 import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 import com.laam.moviedb_cleanarch.framework.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +42,7 @@ class MovieDetailViewModelTest {
 
     @Test
     fun getMovie() = runBlockingTest {
-        val resultState: State.Success<Movie?> = State.Success(dummyMovie)
+        val resultState: State.Success<MovieEntity?> = State.Success(dummyMovie)
         `when`(movieRepositoryImpl.get(dummyMovie.id)).thenReturn(flowOf(resultState))
 
         val interactors = MovieDetailInteractors(movieRepositoryImpl)
@@ -50,7 +50,7 @@ class MovieDetailViewModelTest {
             getMovie(dummyMovie.id)
         }
 
-        val selectedMovie = viewModel.movie.get()
+        val selectedMovie = viewModel.movieEntity.get()
         assertNotNull(selectedMovie)
 
         assertEquals(dummyMovie.id, selectedMovie?.id)

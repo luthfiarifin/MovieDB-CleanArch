@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.Observer
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieDetailBinding
@@ -75,7 +74,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
     private fun onShareClick() {
         activity?.shareText(
             title = resources.getString(R.string.share_this_movie),
-            text = "${BuildConfig.WEB_URL}/movie/${viewModel.movie.get()?.id}"
+            text = "${BuildConfig.WEB_URL}/movie/${viewModel.movieEntity.get()?.id}"
         )
     }
 }

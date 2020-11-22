@@ -1,6 +1,6 @@
 package com.laam.moviedb_cleanarch.framework.data.network.result
 
-import com.laam.core.model.TvShow
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.squareup.moshi.Json
 
@@ -21,7 +21,7 @@ data class TvShowDetailResult(
     @Json(name = "genres") val genres: List<GenreResult> = listOf()
 ) {
 
-    fun mapToTvShow() = TvShow(
+    fun mapToTvShow() = TvShowEntity(
         id,
         name,
         overview,

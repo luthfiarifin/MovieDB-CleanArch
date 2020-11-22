@@ -1,6 +1,6 @@
 package com.laam.moviedb_cleanarch.framework.data.network.result
 
-import com.laam.core.model.Movie
+import com.laam.core.model.MovieEntity
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.squareup.moshi.Json
 
@@ -20,7 +20,7 @@ data class MovieResult(
     @Json(name = "vote_count") val voteCount: Int = 0
 ) {
 
-    fun mapToMovie() = Movie(
+    fun mapToMovie() = MovieEntity(
         id, title, overview, voteAverage,
         "${BuildConfig.MOVIE_DB_IMAGE_URL}/$posterPath", null, releaseDate
     )

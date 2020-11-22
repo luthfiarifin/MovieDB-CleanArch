@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.laam.core.model.Movie" />
+            type="com.laam.core.model.MovieEntity" />
     </data>
 
     <androidx.cardview.widget.CardView

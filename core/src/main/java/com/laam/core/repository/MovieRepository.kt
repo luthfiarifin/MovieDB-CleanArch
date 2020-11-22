@@ -1,13 +1,12 @@
 package com.laam.core.repository
 
 import com.laam.core.ext.repository.State
-import com.laam.core.model.Movie
-import com.laam.core.model.MoviePagination
+import com.laam.core.model.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    suspend fun getAll(): Flow<State<MoviePagination<Movie>>>
+    suspend fun getAll(page: Int): Flow<State<Pair<Int, List<MovieEntity>>>>
 
-    suspend fun get(id: Long): Flow<State<Movie?>>
+    suspend fun get(id: Long): Flow<State<MovieEntity?>>
 }
