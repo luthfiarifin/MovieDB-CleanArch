@@ -51,6 +51,7 @@ class MovieDetailViewModel(
                     is State.Error -> {
                         isLoading.set(false)
                         _movieError.postValue(state.message)
+                        setMovie(state.data)
                     }
                 }
             }

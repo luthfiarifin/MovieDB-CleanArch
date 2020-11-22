@@ -51,6 +51,7 @@ class TvShowDetailViewModel(
                     is State.Error -> {
                         isLoading.set(false)
                         _tvShowError.postValue(state.message)
+                        setTvShow(state.data)
                     }
                 }
             }
