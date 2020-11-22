@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import com.laam.core.ext.repository.State
-import com.laam.core.model.MoviePagination
 import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentTvBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
+import com.laam.moviedb_cleanarch.presentation.util.RecyclerViewUtil.setLoadMore
 import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
 class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>() {
@@ -34,6 +34,9 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>() {
 
     private fun setUpViewBinding() {
         viewBinding.viewModel = viewModel
+        viewBinding.rvTvShow.setLoadMore {
+            if (viewModel.page != -1) viewModel.getTvShows()
+        }
     }
 
     private fun observeTvShowsData() {
@@ -44,27 +47,39 @@ class TvShowFragment : BaseFragment<FragmentTvBinding, TvShowViewModel>() {
                 }
                 is State.Success -> {
                     setLoading(false)
-                    setTvShowList(state.data)
+                    setTvShowList(state.data.second)
+                    setPaging(state.data.first)
                 }
                 is State.Error -> {
                     setLoading(false)
                     onError(state.message)
+                    setTvShowList(state.data?.second ?: listOf())
+                    setPaging(state.data?.first ?: -1)
                 }
             }
         })
     }
 
-    private fun setTvShowList(data: MoviePagination<TvShowEntity>) {
-        if (data.results.isNotEmpty()) rvAdapter.submitList(data.results)
-        else viewModel.isEmptyData.set(true)
+    private fun setTvShowList(data: List<TvShowEntity>) {
+        if (data.isEmpty() && viewModel.page == 1) viewModel.isEmptyData.set(true)
+        else {
+            if (viewModel.page == 1) viewModel.setTvShows(data) else viewModel.addTvShows(data)
+            rvAdapter.submitList(viewModel.tvShows)
+            viewModel.isEmptyData.set(false)
+        }
+    }
+
+    private fun setLoading(boolean: Boolean) {
+        if (viewModel.page == 1) viewModel.isRefreshing.set(boolean)
+        else viewModel.isLoading.set(boolean)
+    }
+
+    private fun setPaging(page: Int) {
+        viewModel.page = page
     }
 
     private fun onError(message: String) {
         view?.showSnackbar(message)
-    }
-
-    private fun setLoading(boolean: Boolean) {
-        viewModel.isLoading.set(boolean)
     }
 
     private fun setUpRecycler() {
