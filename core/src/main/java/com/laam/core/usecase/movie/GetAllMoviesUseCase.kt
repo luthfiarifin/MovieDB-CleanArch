@@ -4,5 +4,5 @@ import com.laam.core.repository.MovieRepository
 
 class GetAllMoviesUseCase(private val repository: MovieRepository) {
 
-    suspend operator fun invoke() = repository.getAll()
+    suspend operator fun invoke(page: Int) = repository.getAll(page)
 }

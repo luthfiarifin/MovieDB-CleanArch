@@ -4,5 +4,5 @@ import com.laam.core.repository.TvShowRepository
 
 class GetAllTvShowsUseCase(private val repository: TvShowRepository) {
 
-    suspend operator fun invoke() = repository.getAll()
+    suspend operator fun invoke(page: Int) = repository.getAll(page)
 }
