@@ -5,11 +5,11 @@ import android.view.View
 import androidx.navigation.Navigation
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MovieEntity
-import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
+import com.laam.moviedb_cleanarch.presentation.util.RecyclerViewUtil.setLoadMore
 import com.laam.moviedb_cleanarch.presentation.util.SnackbarUtil.showSnackbar
 
 class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
@@ -34,6 +34,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
 
     private fun setUpViewBinding() {
         viewBinding.viewModel = viewModel
+        viewBinding.rvMovie.setLoadMore {
+            if (viewModel.page != -1) viewModel.getMovies()
+        }
     }
 
     private fun observeMoviesData() {
@@ -44,27 +47,39 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
                 }
                 is State.Success -> {
                     setLoading(false)
-                    setMovieList(state.data)
+                    setMovieList(state.data.second)
+                    setPaging(state.data.first)
                 }
                 is State.Error -> {
                     setLoading(false)
                     onError(state.message)
+                    setMovieList(state.data?.second ?: listOf())
+                    setPaging(state.data?.first ?: -1)
                 }
             }
         })
     }
 
-    private fun setMovieList(data: MoviePagination<MovieEntity>) {
-        if (data.results.isNotEmpty()) rvAdapter.submitList(data.results)
-        else viewModel.isEmptyData.set(true)
+    private fun setMovieList(data: List<MovieEntity>) {
+        if (data.isEmpty() && viewModel.page == 1) viewModel.isEmptyData.set(true)
+        else {
+            if (viewModel.page == 1) viewModel.setMovies(data) else viewModel.addMovies(data)
+            rvAdapter.submitList(viewModel.movies)
+            viewModel.isEmptyData.set(false)
+        }
+    }
+
+    private fun setLoading(boolean: Boolean) {
+        if (viewModel.page == 1) viewModel.isRefreshing.set(boolean)
+        else viewModel.isLoading.set(boolean)
+    }
+
+    private fun setPaging(page: Int) {
+        viewModel.page = page
     }
 
     private fun onError(message: String) {
         view?.showSnackbar(message)
-    }
-
-    private fun setLoading(boolean: Boolean) {
-        viewModel.isLoading.set(boolean)
     }
 
     private fun setUpRecycler() {
