@@ -9,8 +9,10 @@ import com.laam.core.ext.repository.State
 import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TvShowDetailViewModel(
@@ -30,6 +32,10 @@ class TvShowDetailViewModel(
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         getTvShow(tvShowId)
     }
+
+    private val _isTvShowFavorite = MutableLiveData<Boolean>()
+    val isTvShowFavorite: LiveData<Boolean>
+        get() = _isTvShowFavorite
 
     private val _tvShowError = MutableLiveData<String>()
     val tvShowError: LiveData<String>
@@ -63,5 +69,29 @@ class TvShowDetailViewModel(
             this.tvShowEntity.set(tvShowEntity)
         else
             isNoData.set(true)
+    }
+
+    fun getFavorite() {
+        getViewModelScope().launch {
+            withContext(Dispatchers.IO) {
+                _isTvShowFavorite.postValue(interactors.isTvShowFavoriteUseCase.invoke(tvShowId))
+            }
+        }
+    }
+
+    fun setOnFavoriteClick() {
+        getViewModelScope().launch {
+            withContext(Dispatchers.IO) {
+                if (isTvShowFavorite.value == true) {
+                    interactors.deleteFavoriteTvShowUseCase.invoke(tvShowId)
+                    _isTvShowFavorite.postValue(false)
+                } else {
+                    tvShowEntity.get()?.toTvShowFavoriteEntity()?.let {
+                        interactors.insertTvShowFavoriteUseCase.invoke(it)
+                    }
+                    _isTvShowFavorite.postValue(true)
+                }
+            }
+        }
     }
 }

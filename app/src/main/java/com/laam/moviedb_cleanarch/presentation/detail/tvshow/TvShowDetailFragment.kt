@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.laam.moviedb_cleanarch.BuildConfig
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentTvshowDetailBinding
@@ -25,12 +26,13 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
         setUpToolbar()
         setUpBinding()
         setUpViewModelVariable()
-        observeTvShowError()
     }
 
-    private fun observeTvShowError() {
+    private fun observeTvShowError(itemFavorite: MenuItem) {
         viewModel.tvShowError.observe(viewLifecycleOwner, { message ->
             view?.showSnackbar(message)
+
+            itemFavorite.isVisible = false
         })
     }
 
@@ -44,6 +46,7 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
 
     private fun setUpViewModelVariable() {
         val tvShowId = arguments?.let { TvShowDetailFragmentArgs.fromBundle(it).tvShowId } ?: -1L
+        viewModel.getFavorite()
         viewModel.getTvShow(tvShowId)
     }
 
@@ -55,16 +58,39 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        observeIsTvShowFavorite(menu.findItem(R.id.item_favorite))
+        observeTvShowError(menu.findItem(R.id.item_favorite))
+    }
+
+    private fun observeIsTvShowFavorite(item: MenuItem?) {
+        viewModel.isTvShowFavorite.observe(viewLifecycleOwner, { isFavorite ->
+            activity?.let {
+                item?.icon = if (isFavorite) {
+                    ContextCompat.getDrawable(it, R.drawable.ic_favorite_active)
+                } else {
+                    ContextCompat.getDrawable(it, R.drawable.ic_favorite_not_active)
+                }
+            }
+        })
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
-        inflater.inflate(R.menu.menu_share, menu)
+        inflater.inflate(R.menu.menu_detail, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_share -> {
                 onShareClick()
+                true
+            }
+            R.id.item_favorite -> {
+                viewModel.setOnFavoriteClick()
                 true
             }
             else -> super.onOptionsItemSelected(item)
