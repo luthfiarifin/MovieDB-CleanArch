@@ -63,4 +63,8 @@ class TvShowRepositoryImpl(
 
     override suspend fun insertFavorite(data: TvShowFavoriteEntity) =
         tvShowFavoriteDao.insertTvShow(data)
+
+    override suspend fun deleteFavorite(id: Long) {
+        tvShowFavoriteDao.deleteTvShow(id)
+    }
 }

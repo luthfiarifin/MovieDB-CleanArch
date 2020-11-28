@@ -14,4 +14,6 @@ interface MovieRepository {
     suspend fun isFavorite(id: Long): Boolean
 
     suspend fun insertFavorite(data: MovieFavoriteEntity)
+
+    suspend fun deleteFavorite(id: Long)
 }

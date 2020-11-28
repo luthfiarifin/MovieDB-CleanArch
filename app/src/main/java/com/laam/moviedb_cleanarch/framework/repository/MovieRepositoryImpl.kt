@@ -63,4 +63,8 @@ class MovieRepositoryImpl(
 
     override suspend fun insertFavorite(data: MovieFavoriteEntity) =
         movieFavoriteDao.insertMovie(data)
+
+    override suspend fun deleteFavorite(id: Long) {
+        movieFavoriteDao.deleteMovie(id)
+    }
 }

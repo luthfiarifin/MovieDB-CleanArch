@@ -14,4 +14,6 @@ interface TvShowRepository {
     suspend fun isFavorite(id: Long): Boolean
 
     suspend fun insertFavorite(data: TvShowFavoriteEntity)
+
+    suspend fun deleteFavorite(id: Long)
 }
