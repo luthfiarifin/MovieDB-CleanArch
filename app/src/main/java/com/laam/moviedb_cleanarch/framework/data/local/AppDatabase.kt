@@ -7,7 +7,9 @@ import androidx.room.RoomDatabase
 import com.laam.core.model.MovieEntity
 import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieDao
+import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieFavoriteDao
 import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowDao
+import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowFavoriteDao
 
 @Database(entities = [MovieEntity::class, TvShowEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
@@ -23,4 +25,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
     abstract fun tvShowDao(): TvShowDao
+    abstract fun movieFavoriteDao(): MovieFavoriteDao
+    abstract fun tvShowFavoriteDao(): TvShowFavoriteDao
 }
