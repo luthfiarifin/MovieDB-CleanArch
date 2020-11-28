@@ -6,6 +6,7 @@ import com.laam.core.model.MovieEntity
 import com.laam.core.model.MoviePagination
 import com.laam.core.repository.MovieRepository
 import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieDao
+import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieFavoriteDao
 import com.laam.moviedb_cleanarch.framework.data.network.result.MovieDetailResult
 import com.laam.moviedb_cleanarch.framework.data.network.result.MovieResult
 import com.laam.moviedb_cleanarch.framework.data.network.routes.MovieRoutes
@@ -16,7 +17,8 @@ import retrofit2.Response
 
 class MovieRepositoryImpl(
     private val movieRoutes: MovieRoutes,
-    private val movieDao: MovieDao
+    private val movieDao: MovieDao,
+    private val movieFavoriteDao: MovieFavoriteDao
 ) : MovieRepository {
 
     override suspend fun getAll(page: Int): Flow<State<Pair<Int, List<MovieEntity>>>> =
@@ -53,6 +55,8 @@ class MovieRepositoryImpl(
 
             override fun shouldSaveToLocal(data: MovieDetailResult?): Boolean = false
 
-            override fun mapFromRemote(data: MovieDetailResult): MovieEntity? = data.mapToMovie()
+            override fun mapFromRemote(data: MovieDetailResult): MovieEntity = data.mapToMovie()
         }.asFlow().flowOn(Dispatchers.IO)
+
+    override suspend fun isFavorite(id: Long): Boolean = movieFavoriteDao.getMovie(id) != null
 }
