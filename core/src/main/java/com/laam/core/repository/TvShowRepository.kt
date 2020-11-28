@@ -2,6 +2,7 @@ package com.laam.core.repository
 
 import com.laam.core.ext.repository.State
 import com.laam.core.model.TvShowEntity
+import com.laam.core.model.TvShowFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 interface TvShowRepository {
@@ -11,4 +12,6 @@ interface TvShowRepository {
     suspend fun get(id: Long): Flow<State<TvShowEntity?>>
 
     suspend fun isFavorite(id: Long): Boolean
+
+    suspend fun insertFavorite(data: TvShowFavoriteEntity)
 }

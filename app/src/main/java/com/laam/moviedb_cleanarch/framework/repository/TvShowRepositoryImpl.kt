@@ -4,6 +4,7 @@ import com.laam.core.ext.repository.NetworkBoundRepository
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
 import com.laam.core.model.TvShowEntity
+import com.laam.core.model.TvShowFavoriteEntity
 import com.laam.core.repository.TvShowRepository
 import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowDao
 import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowFavoriteDao
@@ -59,4 +60,7 @@ class TvShowRepositoryImpl(
         }.asFlow().flowOn(Dispatchers.IO)
 
     override suspend fun isFavorite(id: Long): Boolean = tvShowFavoriteDao.getTvShow(id) != null
+
+    override suspend fun insertFavorite(data: TvShowFavoriteEntity) =
+        tvShowFavoriteDao.insertTvShow(data)
 }
