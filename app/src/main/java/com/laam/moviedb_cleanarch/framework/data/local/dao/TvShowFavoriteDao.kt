@@ -19,8 +19,8 @@ interface TvShowFavoriteDao {
     fun insertTvShows(tvShows: List<TvShowFavoriteEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTvShow(tvShows: TvShowFavoriteEntity)
+    fun insertTvShow(tvShows: TvShowFavoriteEntity?)
 
-    @Query("DELETE FROM tv_show_favorite_entity")
-    fun deleteTvShows()
+    @Query("DELETE FROM tv_show_favorite_entity WHERE id = :id")
+    fun deleteTvShow(id: Long)
 }

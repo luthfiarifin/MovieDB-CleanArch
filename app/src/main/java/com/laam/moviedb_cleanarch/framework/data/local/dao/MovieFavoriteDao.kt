@@ -21,6 +21,6 @@ interface MovieFavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movies: MovieFavoriteEntity)
 
-    @Query("DELETE FROM movie_favorite_entities")
-    fun deleteMovies()
+    @Query("DELETE FROM movie_favorite_entities WHERE id = :id")
+    fun deleteMovie(id: Long)
 }
