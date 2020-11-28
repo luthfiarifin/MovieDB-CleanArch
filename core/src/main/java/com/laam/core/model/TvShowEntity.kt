@@ -12,4 +12,8 @@ data class TvShowEntity(
     @ColumnInfo(name = "vote_average") val voteAverage: Float,
     @ColumnInfo(name = "poster") val poster: String?,
     @ColumnInfo(name = "tags") val tags: String?
-)
+) {
+
+    fun toTvShowFavoriteEntity() =
+        TvShowFavoriteEntity(id, name, overview, voteAverage, poster, tags)
+}

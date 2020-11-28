@@ -13,4 +13,8 @@ data class MovieEntity(
     @ColumnInfo(name = "poster") val poster: String?,
     @ColumnInfo(name = "tags") val tags: String?,
     @ColumnInfo(name = "release_date") val releaseDate: String?
-)
+) {
+
+    fun toMovieFavoriteEntity() =
+        MovieFavoriteEntity(id, name, overview, voteAverage, poster, tags, releaseDate)
+}
