@@ -15,7 +15,7 @@ interface TvShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShows(tvShows: List<TvShowEntity>)
 
-    @Query("DELETE FROM movie_entities")
+    @Query("DELETE FROM tv_show_entity")
     fun deleteTvShows()
 
     @Transaction
