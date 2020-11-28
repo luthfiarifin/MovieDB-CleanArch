@@ -7,7 +7,7 @@ import com.laam.core.model.MovieEntity
 interface MovieDao {
 
     @Query("SELECT * FROM movie_entities WHERE id = :id")
-    fun getMovie(id: Long): MovieEntity
+    fun getMovie(id: Long): MovieEntity?
 
     @Query("SELECT * FROM movie_entities")
     fun getMovies(): List<MovieEntity>
