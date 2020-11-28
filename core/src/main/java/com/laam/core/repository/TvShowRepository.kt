@@ -9,4 +9,6 @@ interface TvShowRepository {
     suspend fun getAll(page: Int): Flow<State<Pair<Int, List<TvShowEntity>>>>
 
     suspend fun get(id: Long): Flow<State<TvShowEntity?>>
+
+    suspend fun isFavorite(id: Long): Boolean
 }

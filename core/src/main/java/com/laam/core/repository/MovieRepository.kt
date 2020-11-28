@@ -9,4 +9,6 @@ interface MovieRepository {
     suspend fun getAll(page: Int): Flow<State<Pair<Int, List<MovieEntity>>>>
 
     suspend fun get(id: Long): Flow<State<MovieEntity?>>
+
+    suspend fun isFavorite(id: Long): Boolean
 }
