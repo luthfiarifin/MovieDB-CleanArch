@@ -1,5 +1,8 @@
 package com.laam.moviedb_cleanarch.framework.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.laam.core.ext.repository.NetworkBoundRepository
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
@@ -66,5 +69,15 @@ class TvShowRepositoryImpl(
 
     override suspend fun deleteFavorite(id: Long) {
         tvShowFavoriteDao.deleteTvShow(id)
+    }
+
+    override fun getAllFavorite(): LiveData<PagedList<TvShowFavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+
+        return LivePagedListBuilder(tvShowFavoriteDao.getTvShows(), config).build()
     }
 }

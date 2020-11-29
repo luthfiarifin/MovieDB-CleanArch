@@ -1,5 +1,7 @@
 package com.laam.core.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MovieEntity
 import com.laam.core.model.MovieFavoriteEntity
@@ -16,4 +18,6 @@ interface MovieRepository {
     suspend fun insertFavorite(data: MovieFavoriteEntity)
 
     suspend fun deleteFavorite(id: Long)
+
+    fun getAllFavorite(): LiveData<PagedList<MovieFavoriteEntity>>
 }

@@ -1,5 +1,7 @@
 package com.laam.core.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.laam.core.ext.repository.State
 import com.laam.core.model.TvShowEntity
 import com.laam.core.model.TvShowFavoriteEntity
@@ -16,4 +18,6 @@ interface TvShowRepository {
     suspend fun insertFavorite(data: TvShowFavoriteEntity)
 
     suspend fun deleteFavorite(id: Long)
+
+    fun getAllFavorite(): LiveData<PagedList<TvShowFavoriteEntity>>
 }
