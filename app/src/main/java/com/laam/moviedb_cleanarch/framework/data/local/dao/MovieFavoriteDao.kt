@@ -1,5 +1,6 @@
 package com.laam.moviedb_cleanarch.framework.data.local.dao
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,7 +14,7 @@ interface MovieFavoriteDao {
     fun getMovie(id: Long): MovieFavoriteEntity?
 
     @Query("SELECT * FROM movie_favorite_entities")
-    fun getMovies(): List<MovieFavoriteEntity>
+    fun getMovies(): DataSource.Factory<Int, MovieFavoriteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<MovieFavoriteEntity>)
