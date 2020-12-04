@@ -46,8 +46,8 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
 
     private fun setUpViewModelVariable() {
         val movieId = arguments?.let { MovieDetailFragmentArgs.fromBundle(it).movieId } ?: -1L
-        viewModel.getFavorite()
         viewModel.getMovie(movieId)
+        viewModel.getFavorite()
     }
 
     private fun setUpBinding() {

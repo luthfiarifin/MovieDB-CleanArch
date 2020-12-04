@@ -46,8 +46,8 @@ class TvShowDetailFragment : BaseFragment<FragmentTvshowDetailBinding, TvShowDet
 
     private fun setUpViewModelVariable() {
         val tvShowId = arguments?.let { TvShowDetailFragmentArgs.fromBundle(it).tvShowId } ?: -1L
-        viewModel.getFavorite()
         viewModel.getTvShow(tvShowId)
+        viewModel.getFavorite()
     }
 
     private fun setUpBinding() {
