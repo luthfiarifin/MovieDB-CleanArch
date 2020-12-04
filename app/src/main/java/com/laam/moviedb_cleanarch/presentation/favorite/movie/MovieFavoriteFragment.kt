@@ -7,7 +7,6 @@ import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.FragmentMovieFavoriteBinding
 import com.laam.moviedb_cleanarch.presentation.base.BaseFragment
 import com.laam.moviedb_cleanarch.presentation.favorite.FavoriteFragmentDirections
-import com.laam.moviedb_cleanarch.presentation.home.HomeFragmentDirections
 
 class MovieFavoriteFragment : BaseFragment<FragmentMovieFavoriteBinding, MovieFavoriteViewModel>() {
 

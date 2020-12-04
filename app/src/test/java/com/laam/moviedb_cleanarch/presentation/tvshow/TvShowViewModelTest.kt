@@ -2,7 +2,6 @@ package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.laam.core.ext.repository.State
-import com.laam.core.model.MoviePagination
 import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
 import com.laam.moviedb_cleanarch.framework.repository.TvShowRepositoryImpl
 import kotlinx.coroutines.Dispatchers

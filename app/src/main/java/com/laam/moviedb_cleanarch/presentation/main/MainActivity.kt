@@ -1,7 +1,6 @@
 package com.laam.moviedb_cleanarch.presentation.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import com.laam.moviedb_cleanarch.R
 import com.laam.moviedb_cleanarch.databinding.ActivityMainBinding
