@@ -71,6 +71,17 @@ class MainActivityTest {
     }
 
     @Test
+    fun loadMovieFavorite() {
+        onView(withId(R.id.item_favorite)).perform(click())
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movie)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dummyMovies.size
+            )
+        )
+    }
+
+    @Test
     fun loadTvShow() {
         onView(withText(R.string.tv_show)).perform(click())
 
@@ -105,5 +116,17 @@ class MainActivityTest {
         onView(withId(R.id.tvShowDetail_tv_rating)).check(matches(isDisplayed()))
         onView(withId(R.id.tvShowDetail_rb_rating)).check(matches(isDisplayed()))
         onView(withId(R.id.tvShowDetail_img_poster)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun loadTvShowFavorite() {
+        onView(withId(R.id.item_favorite)).perform(click())
+        onView(withText(R.string.tv_show)).perform(click())
+        onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_show)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dummyTvShows.size
+            )
+        )
     }
 }

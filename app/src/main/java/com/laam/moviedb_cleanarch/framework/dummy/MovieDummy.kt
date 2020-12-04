@@ -153,4 +153,8 @@ object MovieDummy {
 
         return movies
     }
+
+    fun generateDummyMovieFavorite() = generateDummyMovie().map {
+        it.toMovieFavoriteEntity()
+    }
 }

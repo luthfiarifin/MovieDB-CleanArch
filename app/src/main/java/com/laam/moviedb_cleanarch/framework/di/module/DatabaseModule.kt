@@ -22,4 +22,14 @@ object DatabaseModule {
     @JvmStatic
     fun provideTvShowDao(appDatabase: AppDatabase) =
         appDatabase.tvShowDao()
+
+    @Provides
+    @JvmStatic
+    fun provideMovieFavoriteDao(appDatabase: AppDatabase) =
+        appDatabase.movieFavoriteDao()
+
+    @Provides
+    @JvmStatic
+    fun provideTvShowFavoriteDao(appDatabase: AppDatabase) =
+        appDatabase.tvShowFavoriteDao()
 }

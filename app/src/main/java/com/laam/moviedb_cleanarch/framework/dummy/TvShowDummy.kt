@@ -141,4 +141,8 @@ object TvShowDummy {
 
         return tvShows
     }
+
+    fun generateDummyTvShowFavorite() = generateDummyTvShow().map {
+        it.toTvShowFavoriteEntity()
+    }
 }

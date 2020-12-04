@@ -1,11 +1,16 @@
 package com.laam.moviedb_cleanarch.framework.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.laam.core.ext.repository.NetworkBoundRepository
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MovieEntity
+import com.laam.core.model.MovieFavoriteEntity
 import com.laam.core.model.MoviePagination
 import com.laam.core.repository.MovieRepository
 import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieDao
+import com.laam.moviedb_cleanarch.framework.data.local.dao.MovieFavoriteDao
 import com.laam.moviedb_cleanarch.framework.data.network.result.MovieDetailResult
 import com.laam.moviedb_cleanarch.framework.data.network.result.MovieResult
 import com.laam.moviedb_cleanarch.framework.data.network.routes.MovieRoutes
@@ -16,7 +21,8 @@ import retrofit2.Response
 
 class MovieRepositoryImpl(
     private val movieRoutes: MovieRoutes,
-    private val movieDao: MovieDao
+    private val movieDao: MovieDao,
+    private val movieFavoriteDao: MovieFavoriteDao
 ) : MovieRepository {
 
     override suspend fun getAll(page: Int): Flow<State<Pair<Int, List<MovieEntity>>>> =
@@ -53,6 +59,25 @@ class MovieRepositoryImpl(
 
             override fun shouldSaveToLocal(data: MovieDetailResult?): Boolean = false
 
-            override fun mapFromRemote(data: MovieDetailResult): MovieEntity? = data.mapToMovie()
+            override fun mapFromRemote(data: MovieDetailResult): MovieEntity = data.mapToMovie()
         }.asFlow().flowOn(Dispatchers.IO)
+
+    override suspend fun isFavorite(id: Long): Boolean = movieFavoriteDao.getMovie(id) != null
+
+    override suspend fun insertFavorite(data: MovieFavoriteEntity) =
+        movieFavoriteDao.insertMovie(data)
+
+    override suspend fun deleteFavorite(id: Long) {
+        movieFavoriteDao.deleteMovie(id)
+    }
+
+    override fun getAllFavorite(): LiveData<PagedList<MovieFavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+
+        return LivePagedListBuilder(movieFavoriteDao.getMovies(), config).build()
+    }
 }

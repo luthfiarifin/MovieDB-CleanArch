@@ -1,11 +1,16 @@
 package com.laam.moviedb_cleanarch.framework.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.laam.core.ext.repository.NetworkBoundRepository
 import com.laam.core.ext.repository.State
 import com.laam.core.model.MoviePagination
 import com.laam.core.model.TvShowEntity
+import com.laam.core.model.TvShowFavoriteEntity
 import com.laam.core.repository.TvShowRepository
 import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowDao
+import com.laam.moviedb_cleanarch.framework.data.local.dao.TvShowFavoriteDao
 import com.laam.moviedb_cleanarch.framework.data.network.result.TvShowDetailResult
 import com.laam.moviedb_cleanarch.framework.data.network.result.TvShowResult
 import com.laam.moviedb_cleanarch.framework.data.network.routes.TvShowRoutes
@@ -16,7 +21,8 @@ import retrofit2.Response
 
 class TvShowRepositoryImpl(
     private val tvShowRoutes: TvShowRoutes,
-    private val tvShowDao: TvShowDao
+    private val tvShowDao: TvShowDao,
+    private val tvShowFavoriteDao: TvShowFavoriteDao
 ) : TvShowRepository {
 
     override suspend fun getAll(page: Int): Flow<State<Pair<Int, List<TvShowEntity>>>> =
@@ -53,6 +59,25 @@ class TvShowRepositoryImpl(
 
             override fun shouldSaveToLocal(data: TvShowDetailResult?): Boolean = false
 
-            override fun mapFromRemote(data: TvShowDetailResult): TvShowEntity? = data.mapToTvShow()
+            override fun mapFromRemote(data: TvShowDetailResult): TvShowEntity = data.mapToTvShow()
         }.asFlow().flowOn(Dispatchers.IO)
+
+    override suspend fun isFavorite(id: Long): Boolean = tvShowFavoriteDao.getTvShow(id) != null
+
+    override suspend fun insertFavorite(data: TvShowFavoriteEntity) =
+        tvShowFavoriteDao.insertTvShow(data)
+
+    override suspend fun deleteFavorite(id: Long) {
+        tvShowFavoriteDao.deleteTvShow(id)
+    }
+
+    override fun getAllFavorite(): LiveData<PagedList<TvShowFavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+
+        return LivePagedListBuilder(tvShowFavoriteDao.getTvShows(), config).build()
+    }
 }

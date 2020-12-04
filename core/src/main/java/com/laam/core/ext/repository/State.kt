@@ -13,6 +13,6 @@ sealed class State<T> {
 
         fun <T> success(data: T) = Success(data)
 
-        fun <T> error(message: String, data: T?) = Error<T>(message, data)
+        fun <T> error(message: String, data: T?) = Error(message, data)
     }
 }

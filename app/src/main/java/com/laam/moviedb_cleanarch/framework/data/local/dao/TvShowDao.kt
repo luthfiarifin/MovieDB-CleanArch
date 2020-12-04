@@ -7,7 +7,7 @@ import com.laam.core.model.TvShowEntity
 interface TvShowDao {
 
     @Query("SELECT * FROM tv_show_entity WHERE id = :id")
-    fun getTvShow(id: Long): TvShowEntity
+    fun getTvShow(id: Long): TvShowEntity?
 
     @Query("SELECT * FROM tv_show_entity")
     fun getTvShows(): List<TvShowEntity>
@@ -15,7 +15,7 @@ interface TvShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShows(tvShows: List<TvShowEntity>)
 
-    @Query("DELETE FROM movie_entities")
+    @Query("DELETE FROM tv_show_entity")
     fun deleteTvShows()
 
     @Transaction

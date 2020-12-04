@@ -20,7 +20,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             navigateToHome()
-        }, 2000)
+        }, 100)
     }
 
     private fun navigateToHome() {

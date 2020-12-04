@@ -9,8 +9,10 @@ import com.laam.core.ext.repository.State
 import com.laam.core.model.MovieEntity
 import com.laam.moviedb_cleanarch.presentation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieDetailViewModel(
@@ -30,6 +32,10 @@ class MovieDetailViewModel(
     val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         getMovie(movieId)
     }
+
+    private val _isMovieFavorite = MutableLiveData<Boolean>()
+    val isMovieFavorite: LiveData<Boolean>
+        get() = _isMovieFavorite
 
     private val _movieError = MutableLiveData<String>()
     val movieError: LiveData<String>
@@ -63,5 +69,29 @@ class MovieDetailViewModel(
             this.movieEntity.set(movieEntity)
         else
             this.isNoData.set(true)
+    }
+
+    fun getFavorite() {
+        getViewModelScope().launch {
+            withContext(Dispatchers.IO) {
+                _isMovieFavorite.postValue(interactors.isMovieFavoriteUseCase.invoke(movieId))
+            }
+        }
+    }
+
+    fun setOnFavoriteClick() {
+        getViewModelScope().launch {
+            withContext(Dispatchers.IO) {
+                if (isMovieFavorite.value == true) {
+                    interactors.deleteMovieFavoriteUseCase.invoke(movieId)
+                    _isMovieFavorite.postValue(false)
+                } else {
+                    movieEntity.get()?.toMovieFavoriteEntity()?.let {
+                        interactors.insertMovieFavoriteUseCase.invoke(it)
+                    }
+                    _isMovieFavorite.postValue(true)
+                }
+            }
+        }
     }
 }

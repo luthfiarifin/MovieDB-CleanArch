@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_tvShowDetailFragment"
             app:destination="@id/tvShowDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -53,5 +56,16 @@
             android:autoVerify="true"
             app:uri="themoviedb.org/tv/{tvShowId}"
             tools:targetApi="m" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.laam.moviedb_cleanarch.presentation.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_tvShowDetailFragment"
+            app:destination="@id/tvShowDetailFragment" />
     </fragment>
 </navigation>

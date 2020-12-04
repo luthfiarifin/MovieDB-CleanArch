@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import com.laam.moviedb_cleanarch.framework.viewmodel.ViewModelKey
 import com.laam.moviedb_cleanarch.presentation.detail.movie.MovieDetailViewModel
 import com.laam.moviedb_cleanarch.presentation.detail.tvshow.TvShowDetailViewModel
+import com.laam.moviedb_cleanarch.presentation.favorite.FavoriteViewModel
+import com.laam.moviedb_cleanarch.presentation.favorite.movie.MovieFavoriteViewModel
+import com.laam.moviedb_cleanarch.presentation.favorite.tvshow.TvShowFavoriteViewModel
 import com.laam.moviedb_cleanarch.presentation.home.HomeViewModel
 import com.laam.moviedb_cleanarch.presentation.main.MainViewModel
 import com.laam.moviedb_cleanarch.presentation.movie.MovieViewModel
@@ -50,4 +53,19 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TvShowDetailViewModel::class)
     abstract fun bindTvShowDetailViewModel(viewModel: TvShowDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    abstract fun bindFavoriteViewModel(viewModel: FavoriteViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieFavoriteViewModel::class)
+    abstract fun bindMovieFavoriteViewModel(viewModel: MovieFavoriteViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TvShowFavoriteViewModel::class)
+    abstract fun bindTvShowFavoriteViewModel(viewModel: TvShowFavoriteViewModel): ViewModel
 }
