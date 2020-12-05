@@ -35,7 +35,7 @@ class TvShowFavoriteFragment :
     }
 
     private fun observeMoviesData() {
-        viewModel.moviesLiveData.observe(viewLifecycleOwner, {
+        viewModel.tvShowsLiveData.observe(viewLifecycleOwner, {
             rvAdapter.submitList(it)
         })
     }

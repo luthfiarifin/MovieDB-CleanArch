@@ -15,6 +15,6 @@ class TvShowFavoriteViewModel(
     @Inject
     constructor(interactors: TvShowListFavoriteInteractors) : this(interactors, null)
 
-    var moviesLiveData: LiveData<PagedList<TvShowFavoriteEntity>> =
+    var tvShowsLiveData: LiveData<PagedList<TvShowFavoriteEntity>> =
         interactors.getAllTvShowFavoriteUseCase.invoke()
 }

@@ -2,11 +2,10 @@ package com.laam.moviedb_cleanarch.presentation.favorite.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.laam.core.model.MovieFavoriteEntity
-import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
 import com.laam.moviedb_cleanarch.framework.repository.MovieRepositoryImpl
-import com.laam.moviedb_cleanarch.utils.PagedListTestUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -33,6 +32,12 @@ class MovieFavoriteViewModelTest {
     @Mock
     private lateinit var movieRepositoryImpl: MovieRepositoryImpl
 
+    @Mock
+    private lateinit var observer: Observer<PagedList<MovieFavoriteEntity>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<MovieFavoriteEntity>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -43,19 +48,25 @@ class MovieFavoriteViewModelTest {
 
     @Test
     fun getMovieList() = runBlockingTest {
-        val resultState = MutableLiveData<PagedList<MovieFavoriteEntity>>()
-        resultState.value = PagedListTestUtil.mockPagedList(MovieDummy.generateDummyMovieFavorite())
+        val dummyMovies = pagedList
+        Mockito.`when`(dummyMovies.size).thenReturn(12)
 
-        Mockito.`when`(movieRepositoryImpl.getAllFavorite()).thenReturn(resultState)
+        val movies = MutableLiveData<PagedList<MovieFavoriteEntity>>()
+        movies.value = dummyMovies
+
+        Mockito.`when`(movieRepositoryImpl.getAllFavorite()).thenReturn(movies)
 
         val interactors = MovieListFavoriteInteractors(movieRepositoryImpl)
         viewModel = MovieFavoriteViewModel(interactors, testScope)
 
-        val list = viewModel.moviesLiveData.value
-        Mockito.verify(movieRepositoryImpl).getAllFavorite()
-        assertNotNull(list)
+        val movieEntities = viewModel.moviesLiveData.value
 
-        assertEquals(12, list?.size)
+        Mockito.verify(movieRepositoryImpl).getAllFavorite()
+        assertNotNull(movieEntities)
+        assertEquals(12, movieEntities?.size)
+
+        viewModel.moviesLiveData.observeForever(observer)
+        Mockito.verify(observer).onChanged(dummyMovies)
     }
 
     @After

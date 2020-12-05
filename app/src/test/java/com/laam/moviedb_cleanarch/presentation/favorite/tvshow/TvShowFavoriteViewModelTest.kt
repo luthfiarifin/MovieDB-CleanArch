@@ -2,11 +2,10 @@ package com.laam.moviedb_cleanarch.presentation.favorite.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.laam.core.model.TvShowFavoriteEntity
-import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
 import com.laam.moviedb_cleanarch.framework.repository.TvShowRepositoryImpl
-import com.laam.moviedb_cleanarch.utils.PagedListTestUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -33,6 +32,12 @@ class TvShowFavoriteViewModelTest {
     @Mock
     private lateinit var tvShowRepositoryImpl: TvShowRepositoryImpl
 
+    @Mock
+    private lateinit var observer: Observer<PagedList<TvShowFavoriteEntity>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<TvShowFavoriteEntity>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -43,19 +48,25 @@ class TvShowFavoriteViewModelTest {
 
     @Test
     fun getTvShows() = runBlockingTest {
-        val resultState = MutableLiveData<PagedList<TvShowFavoriteEntity>>()
-        resultState.value = PagedListTestUtil.mockPagedList(TvShowDummy.generateDummyTvShowFavorite())
+        val dummyTvShows = pagedList
+        Mockito.`when`(dummyTvShows.size).thenReturn(12)
 
-        Mockito.`when`(tvShowRepositoryImpl.getAllFavorite()).thenReturn(resultState)
+        val movies = MutableLiveData<PagedList<TvShowFavoriteEntity>>()
+        movies.value = dummyTvShows
+
+        Mockito.`when`(tvShowRepositoryImpl.getAllFavorite()).thenReturn(movies)
 
         val interactors = TvShowListFavoriteInteractors(tvShowRepositoryImpl)
         viewModel = TvShowFavoriteViewModel(interactors, testScope)
 
-        val list = viewModel.moviesLiveData.value
-        Mockito.verify(tvShowRepositoryImpl).getAllFavorite()
-        assertNotNull(list)
+        val tvShowEntities = viewModel.tvShowsLiveData.value
 
-        assertEquals(12, list?.size)
+        Mockito.verify(tvShowRepositoryImpl).getAllFavorite()
+        assertNotNull(tvShowEntities)
+        assertEquals(12, tvShowEntities?.size)
+
+        viewModel.tvShowsLiveData.observeForever(observer)
+        Mockito.verify(observer).onChanged(dummyTvShows)
     }
 
     @After
