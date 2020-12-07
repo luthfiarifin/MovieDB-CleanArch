@@ -1,8 +1,9 @@
 package com.laam.moviedb_cleanarch.presentation.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.laam.core.ext.repository.State
-import com.laam.moviedb_cleanarch.framework.dummy.TvShowDummy
+import com.laam.core.model.TvShowEntity
 import com.laam.moviedb_cleanarch.framework.repository.TvShowRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +26,12 @@ class TvShowViewModelTest {
     @Mock
     private lateinit var tvShowRepositoryImpl: TvShowRepositoryImpl
 
+    @Mock
+    private lateinit var observer: Observer<State<Pair<Int, List<TvShowEntity>>>>
+
+    @Mock
+    private lateinit var dummyList: State<Pair<Int, List<TvShowEntity>>>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -35,18 +42,20 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShows() = runBlockingTest {
-        val resultState = State.Success(Pair(1, TvShowDummy.generateDummyTvShow()))
-
-        Mockito.`when`(tvShowRepositoryImpl.getAll(1)).thenReturn(flowOf(resultState))
+        val dummyTvShows = dummyList
+        Mockito.`when`(tvShowRepositoryImpl.getAll(1)).thenReturn(flowOf(dummyTvShows))
 
         val interactors = TvShowListInteractors(tvShowRepositoryImpl)
         viewModel = TvShowViewModel(interactors, testScope)
 
-        val list = viewModel.tvShowsLiveData.value
-        Mockito.verify(tvShowRepositoryImpl).getAll(1)
-        Assert.assertNotNull(list)
+        val tvShows = viewModel.tvShowsLiveData.value
 
-        Assert.assertEquals(12, (list as State.Success?)?.data?.second?.size)
+        Mockito.verify(tvShowRepositoryImpl).getAll(1)
+        Assert.assertNotNull(tvShows)
+        Assert.assertEquals(tvShows, dummyTvShows)
+
+        viewModel.tvShowsLiveData.observeForever(observer)
+        Mockito.verify(observer).onChanged(dummyTvShows)
     }
 
     @After

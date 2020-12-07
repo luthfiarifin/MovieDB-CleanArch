@@ -1,8 +1,9 @@
 package com.laam.moviedb_cleanarch.presentation.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.laam.core.ext.repository.State
-import com.laam.moviedb_cleanarch.framework.dummy.MovieDummy
+import com.laam.core.model.MovieEntity
 import com.laam.moviedb_cleanarch.framework.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,8 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -31,6 +31,12 @@ class MovieViewModelTest {
     @Mock
     private lateinit var movieRepositoryImpl: MovieRepositoryImpl
 
+    @Mock
+    private lateinit var observer: Observer<State<Pair<Int, List<MovieEntity>>>>
+
+    @Mock
+    private lateinit var dummyList: State<Pair<Int, List<MovieEntity>>>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -41,18 +47,20 @@ class MovieViewModelTest {
 
     @Test
     fun getMovieList() = runBlockingTest {
-        val resultState = State.Success(Pair(1, MovieDummy.generateDummyMovie()))
-
-        `when`(movieRepositoryImpl.getAll(1)).thenReturn(flowOf(resultState))
+        val dummyMovies = dummyList
+        Mockito.`when`(movieRepositoryImpl.getAll(1)).thenReturn(flowOf(dummyMovies))
 
         val interactors = MovieListInteractors(movieRepositoryImpl)
         viewModel = MovieViewModel(interactors, testScope)
 
-        val list = viewModel.moviesLiveData.value
-        verify(movieRepositoryImpl).getAll(1)
-        assertNotNull(list)
+        val movies = viewModel.moviesLiveData.value
 
-        assertEquals(12, (list as State.Success?)?.data?.second?.size)
+        Mockito.verify(movieRepositoryImpl).getAll(1)
+        assertNotNull(movies)
+        assertEquals(movies, dummyMovies)
+
+        viewModel.moviesLiveData.observeForever(observer)
+        Mockito.verify(observer).onChanged(dummyMovies)
     }
 
     @After
